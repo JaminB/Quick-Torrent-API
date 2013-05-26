@@ -1,8 +1,10 @@
 package sites.Pirate;
 import java.util.ArrayList;
 
+import com.GetHTTP;
 
-public class PirateGrep extends PiratePageBase {
+
+public class PirateGrep extends GetHTTP {
 	/*
 	 *Provides the methods to search URIs it extends the basic functionality of the PiratePageBase class
 	 *Finds # of seeds, # of leeches, and detailPage links (these are the pages that hold the torrent download links not the .torrent itself)
