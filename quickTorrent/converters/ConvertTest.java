@@ -6,13 +6,29 @@ import quickSearch.Pirate.PirateSimpleSearch;
 public class ConvertTest {
 	
 	public static void main(String[] args) {
-		PirateSimpleSearch Pirate = new PirateSimpleSearch("In the end Linkin Park", false);
-		KATSimpleSearch KAT = new KATSimpleSearch("In the end Linkin Park", true);
+		PirateSimpleSearch Pirate = new PirateSimpleSearch("Stairway to heaven", true);
+		KATSimpleSearch KAT = new KATSimpleSearch("Stairway to heaven", true);
+		
 		MagnetToTorrent myPirateSearch = new MagnetToTorrent(Pirate.FindBestDownload());
-		System.out.println(myPirateSearch.GrepHash());
+		String PirateHash = myPirateSearch.GrepHash();
+		String PiratePage = (myPirateSearch.CreateParsedURI(PirateHash));
+		String PirateUniqueID =  myPirateSearch.GrepUniqueID(PiratePage);
+		String PirateTorrentLink = myPirateSearch.GetTorrentLink(PirateHash, PirateUniqueID);
+		String PirateTorrentFile = myPirateSearch.GetTorrentFile(PirateTorrentLink);
+		System.out.println("\nLocated Unique ID: " + PirateUniqueID);
+		System.out.println("Isolated Hash: " + PirateHash);
+		System.out.println("Download Link: " + PirateTorrentLink);
+		System.out.println("Torrent File: " + PirateTorrentFile);
+		
 		MagnetToTorrent myKATSearch = new MagnetToTorrent(KAT.FindBestDownload());
-		System.out.println(myKATSearch.GrepHash());
-
+		String KATHash = myKATSearch.GrepHash();
+		String KATPage = (myKATSearch.CreateParsedURI(KATHash));
+		String KATUniqueID = myKATSearch.GrepUniqueID(KATPage);
+		String KATTorrentLink = myPirateSearch.GetTorrentLink(KATHash, KATUniqueID);
+		String KATTorrentFile = myPirateSearch.GetTorrentFile(KATTorrentLink);
+		System.out.println("\nLocated Unique ID: " + KATUniqueID);
+		System.out.println("Isolated Hash: " + KATHash);
+		System.out.println("Download Link: " + KATTorrentLink);
+		System.out.println("Torrent File: " + KATTorrentFile);
 	}
-
 }
