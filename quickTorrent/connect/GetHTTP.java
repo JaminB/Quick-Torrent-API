@@ -1,9 +1,9 @@
-package sites.Pirate;
+package connect;
 
 import java.io.*;
 import java.net.*;
 
-public class PiratePageBase { 
+public class GetHTTP { 
 	/*
 	 * Basic HTTP methods needed for the piratebay.sx
 	 */

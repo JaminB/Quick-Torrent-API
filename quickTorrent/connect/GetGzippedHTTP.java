@@ -1,11 +1,11 @@
-package sites.KAT;
+package connect;
 import java.io.*;
 import java.net.*;
 import java.util.zip.GZIPInputStream;
 
 
 
-public class KATPageBase { 
+public class GetGzippedHTTP { 
 	/*
 	 * Given a URI this method will grab the html from that page using http protocol 
 	 * KAT.ph pages are gzipped. This method takes that into account
