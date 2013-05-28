@@ -1,6 +1,6 @@
 package converters;
 
-import com.GetHTTP;
+import connect.GetHTTP;
 public class MagnetToTorrent extends GetHTTP {
 	String magnetLink;
 	String torrentFile;
@@ -73,7 +73,7 @@ public class MagnetToTorrent extends GetHTTP {
 		
 	}
 	
-	public String GetTorrentFile(String torrentURI){
+	public String GetTorrentFilePreview(String torrentURI){
 		/*
 		 * Returns the file as a string
 		 */

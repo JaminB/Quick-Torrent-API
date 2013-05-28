@@ -1,4 +1,4 @@
-package com;
+package connect;
 import java.io.*;
 import java.net.*;
 import java.util.zip.GZIPInputStream;

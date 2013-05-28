@@ -2,7 +2,7 @@ package sites.KAT;
 
 import java.util.ArrayList;
 
-import com.GetGzippedHTTP;
+import connect.GetGzippedHTTP;
 
 public class KATGrep extends GetGzippedHTTP {
 	/*

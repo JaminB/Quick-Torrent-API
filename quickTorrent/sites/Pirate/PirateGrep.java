@@ -1,7 +1,7 @@
 package sites.Pirate;
 import java.util.ArrayList;
 
-import com.GetHTTP;
+import connect.GetHTTP;
 
 
 public class PirateGrep extends GetHTTP {
