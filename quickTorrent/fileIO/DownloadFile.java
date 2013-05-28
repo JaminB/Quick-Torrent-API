@@ -10,7 +10,6 @@ import java.net.URL;
 
 public class DownloadFile {
 	String name = "temp";
-	String localStorePath = "";
 	String downloadURI;
 	
 	public DownloadFile(String downloadURI, String name){
