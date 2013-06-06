@@ -13,14 +13,20 @@ public class KATGrep extends GetGzippedHTTP {
 	 */
 	ArrayList<String> dataCache = new ArrayList<String>(); //stores the data detailsPage data (seeders, leechers, size, links)
 	
-	public String CreateParsedURI (String searchTerm){ 
+	public String CreateParsedURI (String searchTerm, String mediaType){ 
 			/*
 			 * Given a search term return the KAT URI.
 			 * example @param: "linkin park in the end/"
 			 */
+			
 			String baseURI = "https://kat.ph/usearch/";
 			String parsedQuery = "";
-			String audioURI = "%20category:music/";
+			String URI;
+			if (mediaType.toLowerCase().equals("movie") || mediaType.toLowerCase().equals("movies"))
+				URI = "%20category:movies/";
+			else
+				URI = "%20category:music/";
+			
 			for (int i = 0; i < searchTerm.length(); i++){
 				if (searchTerm.charAt(i) == ' ')
 					parsedQuery = parsedQuery + "%20";
@@ -33,7 +39,7 @@ public class KATGrep extends GetGzippedHTTP {
 				else
 					parsedQuery = parsedQuery + searchTerm.charAt(i);
 			}
-			return baseURI + parsedQuery + audioURI;				
+			return baseURI + parsedQuery + URI;				
 		}
 
 	public String[] GrepDetailsPage(String searchPage){ 

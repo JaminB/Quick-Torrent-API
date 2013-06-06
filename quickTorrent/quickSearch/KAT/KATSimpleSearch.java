@@ -4,12 +4,14 @@ public class KATSimpleSearch extends sites.KAT.KATRating {
 /*
  * Takes a search term and a boolean (true == run qualityFilter)
  */
-	public KATSimpleSearch(String query, boolean qualityCheck) {
+	String mediaType;
+	public KATSimpleSearch(String query, String mediaType, boolean qualityCheck) {
 		/*
 		 * Set up your search.
 		 * example @param "Stairway to heaven", true
 		 */
-		super(query, qualityCheck);
+		super(query, mediaType, qualityCheck);
+		this.mediaType = mediaType;
 	}	
 	
 	public String FindBestDownload(){
@@ -17,7 +19,7 @@ public class KATSimpleSearch extends sites.KAT.KATRating {
 		 * Use Returns the best magnet link based on your query passed to the Constructor
 		 */
 		super.ConvertToArrays(super.GenerateQueryResults());
-		String bestLink = super.GetBestLink(super.seedArray, super.leechArray);
+		String bestLink = super.GetBestLink(super.seedArray, super.leechArray, this.mediaType);
 		return super.GrepMagnetLink(bestLink);
 	}
 }
