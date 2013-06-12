@@ -54,8 +54,8 @@ public class KATRating extends KATGrep {
 		int sizeMinimum;
 		int sizeMaximum;
 		if (mediaType.toLowerCase().equals("movie") || mediaType.toLowerCase().equals("movies")){
-			sizeMinimum = 300;
-			sizeMaximum = 999;
+			sizeMinimum = 0;
+			sizeMaximum = 2;
 		}
 		else{
 			sizeMinimum = 3;

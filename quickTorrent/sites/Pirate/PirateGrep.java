@@ -13,21 +13,28 @@ public class PirateGrep extends GetHTTP {
 	 */
 	ArrayList<String> dataCache = new ArrayList<String>(); //stores the data detailsPage data (seeders, leechers, size, links)
 	
-	public String CreateParsedURI (String searchTerm){ 
+	public String CreateParsedURI (String searchTerm, String mediaType){ 
 		/*
 		 * Given a search term return the Piratebay URI.
 		 * example @param "linkin park in the end"
 		 */
 		String baseURI = "http://thepiratebay.sx/search/";
 		String parsedQuery = "";
-		String audioURI = "/0/99/100";
+		
+		
+		String URI;
+		if (mediaType.toLowerCase().equals("movie") || mediaType.toLowerCase().equals("movies"))
+			URI = "/0/99/200";
+		else
+			URI = "/0/99/100";
+		        
 		for (int i = 0; i < searchTerm.length(); i++){
 			if (searchTerm.charAt(i) != ' ')
 				parsedQuery = parsedQuery + searchTerm.charAt(i);
 			else
 				parsedQuery = parsedQuery + "%20";
 		}
-		return baseURI + parsedQuery + audioURI;				
+		return baseURI + parsedQuery + URI;				
 	}
 	
 	public String[] GrepDetailsPage(String searchPage){ 
