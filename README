@@ -8,6 +8,7 @@ ________________________________________________________________________________
 Package Structure: 
 
 Summary:
+
 connect == Implements native java.net and java.io libraries to make http requests and interact with webpages. 
 converters == Implements the connect package to make convert magnet links to torrent files.
 fileIO == Implements native java.net and java.io libraries to download binaries
