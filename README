@@ -1,8 +1,8 @@
 Quick-Torrent API (Pre-Alpha)
 
-	Overview: 
-	An extensive tracker-site data-mining API, containing methods that allow anything from simple information gathering, to "smart torrent searches."
-	Currently supports the piratebay.sx and kickass.to
+Overview: 
+An extensive tracker-site data-mining API, containing methods that allow anything from simple information gathering, to "smart torrent searches."
+Currently supports the piratebay.sx and kickass.to
 ________________________________________________________________________________________________________________________________________________________ 
 Package Structure: 
 
@@ -19,7 +19,8 @@ Relationships:  (--> denotes a parent --> child relationship)
 	  	fileIO
 ________________________________________________________________________________________________________________________________________________________
 	  
-Classes
+Classes:
+
 connect.GetGzippedHTTP == Contains methods to pull down gzipped content from webpages and store in a plain-text string.
 
 connect.GetHTTP == Contains methods to plain text content from webpages pages and store in a plain-text string.
