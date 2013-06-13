@@ -15,11 +15,13 @@ public class PirateRating extends PirateGrep {
 	private String[] torrentPages;
 	private boolean qc = true;
 	
-	public PirateRating(String query, boolean qualityCheck){
+	public PirateRating(String query, String mediaType, boolean qualityCheck){
 		/*
 		 * Constructor, two arguments the search query and a boolean, true == scan comments, false == do not scan comments
 		 */
-		String currentSearch = CreateParsedURI(query); //returns the parsed URI query
+		String currentSearch = CreateParsedURI(query, mediaType); //returns the parsed URI query
+		//debug code
+		System.out.println(currentSearch);
 		String searchResultHTML = super.GetWebPageHTTP(currentSearch); //pulls down the html from the URI given
 		torrentPages = super.GrepDetailsPage(searchResultHTML); //finds each torrent page link
 		qc = qualityCheck;
@@ -47,16 +49,27 @@ public class PirateRating extends PirateGrep {
 		linkArray = super.DataCacheToArray(queryResults, "link");
 	}
 	
-	public String GetBestLink(int[] seedArray, int[] leechArray){
+	public String GetBestLink(int[] seedArray, int[] leechArray, String mediaType){
 		/*
 		 * Determines the best link to pull the torrent from.
 		 */
+		 int sizeMinimum;
+		 int sizeMaximum;
+		 if (mediaType.toLowerCase().equals("movie") || mediaType.toLowerCase().equals("movies")){
+			 sizeMinimum = 0;
+			 sizeMaximum = 2;
+		 }
+		 else{
+		 sizeMinimum = 3;
+		 sizeMaximum = 11;
+		 }
+		 System.out.println("\nSize Minimum: " + sizeMinimum);     
 		try{
 		String bestChoice = null;
 		int greatestDifference = 0;
 			for (int i = 0; i < seedArray.length; i++){
 				if (seedArray[i] - leechArray[i] > greatestDifference)
-					if (sizeArray[i] < 10){
+					if (sizeArray[i] > sizeMinimum && sizeArray[i] < sizeMaximum){
 						greatestDifference = seedArray[i] -leechArray[i];
 						bestChoice = linkArray[i];
 					}
