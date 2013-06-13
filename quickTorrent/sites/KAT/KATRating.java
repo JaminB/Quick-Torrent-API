@@ -47,16 +47,28 @@ public class KATRating extends KATGrep {
 		linkArray = super.DataCacheToArray(queryResults, "link");
 	}
 	
-	public String GetBestLink(int[] seedArray, int[] leechArray){
+	public String GetBestLink(int[] seedArray, int[] leechArray, String mediaType){
 		/*
 		 * Determines the best link to pull the torrent from.
 		 */
+		int sizeMinimum;
+		int sizeMaximum;
+		if (mediaType.toLowerCase().equals("movie") || mediaType.toLowerCase().equals("movies")){
+			sizeMinimum = 0;
+			sizeMaximum = 2;
+		}
+		else{
+			sizeMinimum = 3;
+			sizeMaximum = 11;
+		}
+		System.out.println("\nSize Minimum: " + sizeMinimum);
+			
 		try{
 		String bestChoice = null;
 		int greatestDifference = 0;
 			for (int i = 0; i < seedArray.length; i++){
 				if (seedArray[i] - leechArray[i] > greatestDifference)
-					if (sizeArray[i] < 10){
+					if (sizeArray[i] > sizeMinimum && sizeArray[i] < sizeMaximum){
 						greatestDifference = seedArray[i] -leechArray[i];
 						bestChoice = linkArray[i];
 					}
