@@ -5,8 +5,8 @@ import quickSearch.Pirate.PirateSimpleSearch;
 public class ConvertTest {
 	
 	public static void main(String[] args) {
-		PirateSimpleSearch Pirate = new PirateSimpleSearch("One Metallica", true);
-		KATSimpleSearch KAT = new KATSimpleSearch("One Metallica", true);
+		PirateSimpleSearch Pirate = new PirateSimpleSearch("salk;fj;askljf", true);
+		KATSimpleSearch KAT = new KATSimpleSearch("Serenity", "movie", true);
 		
 		MagnetToTorrent myPirateSearch = new MagnetToTorrent(Pirate.FindBestDownload());
 		String PirateHash = myPirateSearch.GrepHash();

@@ -15,12 +15,11 @@ public class KATRating extends KATGrep {
 	private String[] torrentPages;
 	private boolean qc = true;
 	
-	public KATRating(String query, boolean qualityCheck){
+	public KATRating(String query, String mediaType, boolean qualityCheck){
 		/*
 		 * Constructor, two arguments the search query and a boolean, true == scan comments, false == do not scan comments
 		 */
-		String currentSearch = CreateParsedURI(query); //returns the parsed URI query
-		System.out.println(currentSearch);
+		String currentSearch = CreateParsedURI(query, mediaType); //returns the parsed URI query
 		String searchResultHTML = super.GetWebPageGzipHTTP(currentSearch); //pulls down the html from the URI given
 		torrentPages = super.GrepDetailsPage(searchResultHTML); //finds each torrent page link
 		qc = qualityCheck;
