@@ -20,6 +20,7 @@ public class KATRating extends KATGrep {
 		 * Constructor, two arguments the search query and a boolean, true == scan comments, false == do not scan comments
 		 */
 		String currentSearch = CreateParsedURI(query); //returns the parsed URI query
+		System.out.println(currentSearch);
 		String searchResultHTML = super.GetWebPageGzipHTTP(currentSearch); //pulls down the html from the URI given
 		torrentPages = super.GrepDetailsPage(searchResultHTML); //finds each torrent page link
 		qc = qualityCheck;

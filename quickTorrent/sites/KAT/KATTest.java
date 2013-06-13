@@ -22,4 +22,5 @@ public class KATTest {
 		System.out.println("\nBest Link: " + bestLink);
 		System.out.println("\nDownload Link: "+ mySearch.GrepMagnetLink(bestLink));
 	}
+	
 }

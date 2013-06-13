@@ -18,7 +18,7 @@ public class KATGrep extends GetGzippedHTTP {
 			 * Given a search term return the KAT URI.
 			 * example @param: "linkin park in the end/"
 			 */
-			String baseURI = "https://kat.ph/usearch/";
+			String baseURI = "http://kickass.to/usearch/";
 			String parsedQuery = "";
 			String audioURI = "%20category:music/";
 			for (int i = 0; i < searchTerm.length(); i++){
@@ -40,7 +40,7 @@ public class KATGrep extends GetGzippedHTTP {
 			/*
 			 * Given a plain HTML page as a string it will parse out the torrent links and return an array of all of them
 			 * This method will take direct input from the KATParseURI method
-			 * example @param: "https://kat.ph/usearch/linkinpark%20in%20the%20end/"
+			 * example @param: "https://kickass.to/usearch/linkinpark%20in%20the%20end/"
 			 */
 			String p = searchPage;
 			int result = 0;
@@ -61,7 +61,7 @@ public class KATGrep extends GetGzippedHTTP {
 						int linkEnd = linkStart+2;
 						while (p.charAt(linkEnd) != '"')
 							linkEnd++;
-							KATTorrentPage[result] = ("https://kat.ph/"+p.substring(linkStart, linkEnd));
+							KATTorrentPage[result] = ("http://kickass.to/"+p.substring(linkStart, linkEnd));
 						result++;
 					}
 					
@@ -76,7 +76,7 @@ public class KATGrep extends GetGzippedHTTP {
 	public ArrayList<String> BuildDataCache(String[] detailsPage){
 		/*
 		 *  Given a list of KAT torrent address returns the seeds, leeches and links in an ArrayList
-		 *  example @param: GrepDetailsPage("https://kat.ph/usearch/linkinpark%20in%20the%20end/")
+		 *  example @param: GrepDetailsPage("https://kickass.to/usearch/linkinpark%20in%20the%20end/")
 		 */
 		dataCache = new ArrayList<String>();
 		int pageNumber = 0;
@@ -126,7 +126,7 @@ public class KATGrep extends GetGzippedHTTP {
 	public ArrayList <String> QualityFilter(ArrayList <String> dataCache){
 		/*
 		 * Quality Check Based on positive/negative rating takes the original cache and filters out bad results
-		 * example @param: GetDataCache() || BuildDataCache("https://kat.ph/usearch/linkinpark%20in%20the%20end/")
+		 * example @param: GetDataCache() || BuildDataCache("https://kickass.to/usearch/linkinpark%20in%20the%20end/")
 		 */
 		ArrayList<String> qualityList = dataCache; //use the original dataCache array list
 		int pageNumber = 0;
@@ -181,7 +181,7 @@ public class KATGrep extends GetGzippedHTTP {
 	public String GrepMagnetLink(String detailsPage){
 		/*
 		 * Given a link this method will find the download link and return it.
-		 * example @param: "https://kat.ph/usearch/linkinpark%20in%20the%20end/"
+		 * example @param: "https://kickass.to/usearch/linkinpark%20in%20the%20end/"
 		 */
 		String torrentDownloadLink = null;
 		boolean firstResult = false;

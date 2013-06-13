@@ -3,8 +3,6 @@ import java.io.*;
 import java.net.*;
 import java.util.zip.GZIPInputStream;
 
-
-
 public class GetGzippedHTTP { 
 	/*
 	 * Given a URI this method will grab the html from that page using http protocol 
