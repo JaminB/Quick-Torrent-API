@@ -1,14 +1,17 @@
-package converters;
-
+package converters.ISO;
 import connect.GetHTTP;
 public class MagnetToTorrent extends GetHTTP {
-	String magnetLink;
+	/*
+	 * Depreciated Magnet to Torrent Conversion Class
+	 * The ISO.MagnetToTorrent methods should only be used if this class yields no results
+	 */
 	String torrentFile;
+	String magnetLink;
 	
 	public MagnetToTorrent(String magnetLink){
 		this.magnetLink = magnetLink;
 	}
-	public String GrepHash(){
+	public String GetHash(){
 		/*
 		 * Strips the hash value from the magnetLink
 		 */
@@ -22,7 +25,7 @@ public class MagnetToTorrent extends GetHTTP {
 		}
 	}
 	
-	public String CreateParsedURI(String hash){
+	public String CreateISOParsedURI(String hash){
 		/*
 		 * Generates a search link based on a hash query
 		 */
@@ -32,17 +35,17 @@ public class MagnetToTorrent extends GetHTTP {
 			return searchLink;
 		}
 		else 
-			return null;
-			
+			return null;	
 	}
 	
-	public String GrepUniqueID(String detailsLink){
+	
+	public String GrepUniqueID(String searchLink){
 		/*
 		 * Gets the unique file ID (used to generate a .torrent location)
 		 * This method also take server load/latency into account
 		 */
-		int detailsLinkStart = 0;
-		int detailsLinkEnd = 0;
+		int searchLinkStart = 0;
+		int searchLinkEnd = 0;
 		int attempts = 0;
 		String uniqueID = "0000000000000000"; //loop atleast once.
 		String searchPage; 
@@ -51,13 +54,13 @@ public class MagnetToTorrent extends GetHTTP {
 				attempts++;
 				if (attempts >= 5)
 					return null; //exit if we are in this loop for over 5 iterations
-				searchPage = super.GetWebPageHTTP(detailsLink);
-				detailsLinkStart = searchPage.indexOf("torrent_details") +16 ;
+				searchPage = super.GetWebPageHTTP(searchLink);
+				searchLinkStart = searchPage.indexOf("torrent_details") +16 ;
 				int i = 0;
-				detailsLinkEnd = detailsLinkStart;
-				while(searchPage.charAt(detailsLinkEnd) + i != '/' )
-					detailsLinkEnd++;
-				uniqueID = searchPage.substring(detailsLinkStart, detailsLinkEnd);
+				searchLinkEnd = searchLinkStart;
+				while(searchPage.charAt(searchLinkEnd) + i != '/' )
+					searchLinkEnd++;
+				uniqueID = searchPage.substring(searchLinkStart, searchLinkEnd);
 			}
 		return uniqueID;
 		}catch(Exception e){
