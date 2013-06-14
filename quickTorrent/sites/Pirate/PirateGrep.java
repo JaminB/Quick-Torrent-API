@@ -16,7 +16,7 @@ public class PirateGrep extends GetHTTP {
 	public String CreateParsedURI (String searchTerm, String mediaType){ 
 		/*
 		 * Given a search term return the Piratebay URI.
-		 * example @param "linkin park in the end"
+		 * example @param "linkin park in the end", "music"
 		 */
 		String baseURI = "http://thepiratebay.sx/search/";
 		String parsedQuery = "";

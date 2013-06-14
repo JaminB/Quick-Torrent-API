@@ -20,8 +20,6 @@ public class PirateRating extends PirateGrep {
 		 * Constructor, two arguments the search query and a boolean, true == scan comments, false == do not scan comments
 		 */
 		String currentSearch = CreateParsedURI(query, mediaType); //returns the parsed URI query
-		//debug code
-		System.out.println(currentSearch);
 		String searchResultHTML = super.GetWebPageHTTP(currentSearch); //pulls down the html from the URI given
 		torrentPages = super.GrepDetailsPage(searchResultHTML); //finds each torrent page link
 		qc = qualityCheck;

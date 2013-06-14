@@ -8,7 +8,7 @@ public class KATSimpleSearch extends sites.KAT.KATRating {
 	public KATSimpleSearch(String query, String mediaType, boolean qualityCheck) {
 		/*
 		 * Set up your search.
-		 * example @param "Stairway to heaven", true
+		 * example @param "Stairway to heaven", "music", true
 		 */
 		super(query, mediaType, qualityCheck);
 		this.mediaType = mediaType;

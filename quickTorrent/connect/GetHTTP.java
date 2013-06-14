@@ -6,8 +6,7 @@ import java.net.*;
 public class GetHTTP { 
 	/*
 	 * Basic HTTP methods needed for the piratebay.sx
-	 */
-			
+	 */	
 	public String GetWebPageHTTP(String URI){ 
 		/*
 		 * Given a URI this method will grab the html from that page using http protocol

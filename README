@@ -3,6 +3,8 @@ Quick-Torrent API (Pre-Alpha)
 Overview: 
 
 An extensive tracker-site data-mining API, containing methods that allow anything from simple information gathering, to "smart torrent searches."
+	Provides methods for converting magnet links to torrent files for download.
+	Provides methods for ranking and comparing torrents.
 Currently supports the piratebay.sx and kickass.to
 ________________________________________________________________________________________________________________________________________________________ 
 Package Structure: 

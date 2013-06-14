@@ -16,7 +16,7 @@ public class KATGrep extends GetGzippedHTTP {
 	public String CreateParsedURI (String searchTerm, String mediaType){ 
 			/*
 			 * Given a search term return the KAT URI.
-			 * example @param: "linkin park in the end/"
+			 * example @param: "linkin park in the end/", "music"
 			 */
 
 			String baseURI = "http://kickass.to/usearch/";
@@ -26,7 +26,7 @@ public class KATGrep extends GetGzippedHTTP {
 			if (mediaType.toLowerCase().equals("movie") || mediaType.toLowerCase().equals("movies"))
 				URI = "%20category:movies/";
 			else
-				URI = "%20category:music/";
+				URI = "%20category:mp3/";
 			
 			for (int i = 0; i < searchTerm.length(); i++){
 				if (searchTerm.charAt(i) == ' ')

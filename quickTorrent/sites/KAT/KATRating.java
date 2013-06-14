@@ -11,7 +11,6 @@ public class KATRating extends KATGrep {
 	public int[] seedArray;
 	public int[] leechArray;
 	public String[] linkArray;
-	
 	private String[] torrentPages;
 	private boolean qc = true;
 	

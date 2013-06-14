@@ -6,7 +6,7 @@ import java.util.zip.GZIPInputStream;
 public class GetGzippedHTTP { 
 	/*
 	 * Given a URI this method will grab the html from that page using http protocol 
-	 * KAT.ph pages are gzipped. This method takes that into account
+	 * kickass.to pages are gzipped. This method takes that into account
 	 */
 	public String GetWebPageGzipHTTP(String URI){ 
 		String html = "";

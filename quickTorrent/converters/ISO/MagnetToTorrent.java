@@ -3,7 +3,7 @@ import connect.GetHTTP;
 public class MagnetToTorrent extends GetHTTP {
 	/*
 	 * Depreciated Magnet to Torrent Conversion Class
-	 * The ISO.MagnetToTorrent methods should only be used if this class yields no results
+	 * The ISO.MagnetToTorrent methods should only be used if Torcache.MagnetToTorrent yields no results
 	 */
 	String torrentFile;
 	String magnetLink;

@@ -9,7 +9,7 @@ public class PirateSimpleSearch extends sites.Pirate.PirateRating {
 	public PirateSimpleSearch(String query, String mediaType, boolean qualityCheck) {
 		/*
 		 * Set up your search.
-		 * example @param "Stairway to heaven", true
+		 * example @param "Stairway to heaven", "music", true
 		 */
 		super(query, mediaType, qualityCheck);
 		this.mediaType = mediaType;
