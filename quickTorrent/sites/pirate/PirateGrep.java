@@ -1,4 +1,6 @@
 package sites.pirate;
+import globals.Constants;
+
 import java.util.ArrayList;
 
 import connect.GetHTTP;
@@ -18,15 +20,15 @@ public class PirateGrep extends GetHTTP {
 		 * Given a search term return the Piratebay URI.
 		 * example @param "linkin park in the end", "music"
 		 */
-		String baseURI = "http://thepiratebay.sx/search/";
+		String baseURI = Constants.PIRATE_SEARCH_BASE;
 		String parsedQuery = "";
 		
 		
 		String URI;
 		if (mediaType.toLowerCase().equals("movie") || mediaType.toLowerCase().equals("movies"))
-			URI = "/0/99/200";
+			URI = Constants.PIRATE_SEARCH_MOVIE_SUFFIX;
 		else
-			URI = "/0/99/100";
+			URI = Constants.PIRATE_SEARCH_MUSIC_SUFFIX;
 		        
 		for (int i = 0; i < searchTerm.length(); i++){
 			if (searchTerm.charAt(i) != ' ')
@@ -55,7 +57,7 @@ public class PirateGrep extends GetHTTP {
 					}
 					int linkStart = i +7;
 					int linkEnd = j;
-					detailPage[result] = "http://thepiratebay.sx/"+p.substring(linkStart, linkEnd);
+					detailPage[result] = Constants.PIRATE_BASE+p.substring(linkStart, linkEnd);
 					result++;
 			}
 		}

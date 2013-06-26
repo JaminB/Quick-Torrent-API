@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import globals.Constants;
 
 public class DownloadFile {
 	String name = "temp";
@@ -24,8 +25,8 @@ public class DownloadFile {
 		HttpURLConnection connect;
 			inputURI = new URL(this.downloadURI);
 			connect = (HttpURLConnection) inputURI.openConnection();
-		    connect.setReadTimeout(10000);
-			connect.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.3) Gecko/20100401");
+		    connect.setReadTimeout(Constants.READ_TIMEOUT);
+			connect.setRequestProperty("User-Agent", Constants.USER_AGENT );
 			connect.setRequestMethod("GET");
 			String FileName = name + ".torrent";
 		    HttpURLConnection http = (HttpURLConnection)inputURI.openConnection();

@@ -1,5 +1,6 @@
 package converters.iso;
 import connect.GetHTTP;
+import globals.Constants;
 public class MagnetToTorrent extends GetHTTP {
 	/*
 	 * Depreciated Magnet to Torrent Conversion Class
@@ -31,7 +32,7 @@ public class MagnetToTorrent extends GetHTTP {
 		 */
 		String searchLink = null;
 		if(hash != null){
-			searchLink = "http://isohunt.com/torrents/?ihq="+hash;
+			searchLink = Constants.ISO_SEARCH_BASE+hash;
 			return searchLink;
 		}
 		else 
@@ -69,7 +70,7 @@ public class MagnetToTorrent extends GetHTTP {
 	}
 	
 	public String GetTorrentLink(String hash, String uniqueID){
-		String base = "http://isohunt.com/download/";
+		String base = Constants.ISO_DOWNLOAD_BASE;
 		if(hash == null || uniqueID == null)
 			return null;
 		return base + uniqueID + "/" + hash +".torrent";

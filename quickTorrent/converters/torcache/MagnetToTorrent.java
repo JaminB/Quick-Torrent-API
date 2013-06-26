@@ -1,5 +1,6 @@
 package converters.torcache;
 import connect.GetHTTP;
+import globals.Constants;
 public class MagnetToTorrent extends GetHTTP {
 /*
  * Recommended Magnet to Torrent Conversion Class
@@ -27,7 +28,7 @@ public class MagnetToTorrent extends GetHTTP {
 	
 	
 	public String getTorrentLink(String hash){
-		String base = "http://torcache.net/torrent/";
+		String base = Constants.TORCACHE_SEARCH_BASE;
 		if(hash == null)
 			return null;
 		return base + hash + ".torrent";
