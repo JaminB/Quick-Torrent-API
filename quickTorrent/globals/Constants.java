@@ -19,8 +19,8 @@ public class Constants {
 	//KAT constants
 	public static String KAT_BASE = "http://kickass.to/";
 	public static String KAT_SEARCH_BASE = "http://kickass.to/usearch/";
-	public static String KAT_SEARCH_MUSIC_SUFFIX = "%20category:movies/";
-	public static String KAT_SEARCH_MOVIE_SUFFIX = "%20category:mp3/";
+	public static String KAT_SEARCH_MUSIC_SUFFIX = "%20category:mp3/";
+	public static String KAT_SEARCH_MOVIE_SUFFIX = "%20category:movies/";
 	
 	
 

@@ -1,7 +1,6 @@
 package sites.kat;
 
-import globals.Constants;
-
+import globals.*;
 import java.util.ArrayList;
 import connect.GetGzippedHTTP;
 
@@ -20,9 +19,7 @@ public class KATGrep extends GetGzippedHTTP {
 			 * Given a search term return the KAT URI.
 			 * example @param: "linkin park in the end/", "music"
 			 */
-
 			String baseURI = Constants.KAT_SEARCH_BASE;
-
 			String parsedQuery = "";
 			String URI;
 			if (mediaType.toLowerCase().equals("movie") || mediaType.toLowerCase().equals("movies"))
@@ -42,7 +39,7 @@ public class KATGrep extends GetGzippedHTTP {
 				else
 					parsedQuery = parsedQuery + searchTerm.charAt(i);
 			}
-			return baseURI + parsedQuery + URI;				
+			return baseURI + parsedQuery + URI; //returns the search page				
 		}
 
 	public String[] grepDetailsPage(String searchPage){ 
@@ -76,6 +73,7 @@ public class KATGrep extends GetGzippedHTTP {
 					
 				}
 				System.out.println("Found: " + result);
+				Variables.lastSearch.add(KATTorrentPage[result]); //adds the query to the global last search list
 				return KATTorrentPage;
 			}catch(Exception e){
 				return null;

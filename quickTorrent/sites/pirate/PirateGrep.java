@@ -1,5 +1,6 @@
 package sites.pirate;
 import globals.Constants;
+import globals.Variables;
 
 import java.util.ArrayList;
 
@@ -9,7 +10,7 @@ import connect.GetHTTP;
 public class PirateGrep extends GetHTTP {
 	/*
 	 *Provides the methods to search URIs it extends the basic functionality of the PiratePageBase class
-	 *Finds # of seeds, # of leeches, and detailPage links (these are the pages that hold the torrent download links not the .torrent itself)
+	 *Finds # of seeds, # of leeches, and pirateTorrentPage links (these are the pages that hold the torrent download links not the .torrent itself)
 	 *Can determine based on comments whether a torrent link contains a decent quality download
 	 *Can find the size of a file.
 	 */
@@ -36,7 +37,7 @@ public class PirateGrep extends GetHTTP {
 			else
 				parsedQuery = parsedQuery + "%20";
 		}
-		return baseURI + parsedQuery + URI;				
+		return baseURI + parsedQuery + URI; //returns the search page
 	}
 	
 	public String[] grepDetailsPage(String searchPage){ 
@@ -47,7 +48,7 @@ public class PirateGrep extends GetHTTP {
 		 */
 		String p = searchPage;
 		int result = 0;
-		String[] detailPage = new String[31]; //holds the top 30 results
+		String[] pirateTorrentPage = new String[31]; //holds the top 30 results
 		for (int i = 0; i<p.length(); i++){
 			if(p.charAt(i) == 'h' && p.charAt(i+1) == 'r' && p.charAt(i+2) == 'e' && p.charAt(i+3) == 'f'  && p.charAt(i+7) == 't' && p.charAt(i+8) == 'o' 
 					&& p.charAt(i+9) == 'r' && p.charAt(i+10) == 'r' && p.charAt(i+11) == 'e' && p.charAt(i+12) == 'n' && p.charAt(i+13) == 't' && p.charAt(i+14) == '/'){
@@ -57,30 +58,35 @@ public class PirateGrep extends GetHTTP {
 					}
 					int linkStart = i +7;
 					int linkEnd = j;
-					detailPage[result] = Constants.PIRATE_BASE+p.substring(linkStart, linkEnd);
+					pirateTorrentPage[result] = Constants.PIRATE_BASE+p.substring(linkStart, linkEnd);
+					Variables.lastSearch.add(pirateTorrentPage[result]); //adds the list of traversed links to the global last search list
 					result++;
 			}
 		}
 		System.out.println("Found " + result);
-		return detailPage;
+		return pirateTorrentPage;
 	}
 	
-	public ArrayList<String> buildDataCache(String[] detailPage){
+	public ArrayList<String> buildDataCache(String[] pirateTorrentPage){
 		/*
 		 *  Given a string array of Detail Pages will return the stats of each page in an array list
 		 *  example @param GrepDetailsPage("http://thepiratebay.sx/search/linkin%20park%20in%20the%20end/0/99/100")
 		 */
 		dataCache = new ArrayList<String>(); //rebuild cache
 		int pageNumber = 0;
-		while (detailPage[pageNumber] != null){
-			String URI = detailPage[pageNumber]; //store the URI in a local variable for convenience
+		while (pirateTorrentPage[pageNumber] != null){
+			String URI = pirateTorrentPage[pageNumber]; //store the URI in a local variable for convenience
 			String pageHTML = super.getWebPageHTTP(URI); //pull down the html of the page
+			String size = null; 
+			String seed = null; 
+			String leech = null;
 			for ( int i = 0; i <pageHTML.length() ; i++){
+				
 				if(pageHTML.charAt(i) == 'S' && pageHTML.charAt(i+1) == 'i' && pageHTML.charAt(i+2) == 'z' && pageHTML.charAt(i+3) == 'e'&& pageHTML.charAt(i+4) == ':' && pageHTML.charAt(i+5) == '<' && pageHTML.charAt(i+6) == '/') {
 						int j = i + 16;
 						while (pageHTML.charAt(j) != '&')
 							j++;
-						dataCache.add(pageHTML.substring(i+16, j));
+						size = pageHTML.substring(i+16, j);
 					}
 				if  (pageHTML.charAt(i) == 'S'  && pageHTML.charAt(i+1) == 'e' && pageHTML.charAt(i+2) == 'e' && pageHTML.charAt(i+3) == 'd' && pageHTML.charAt(i+4) == 'e' && pageHTML.charAt(i+5) == 'r' && pageHTML.charAt(i+6) == 's' && pageHTML.charAt(i+7) == ':'){
 					int j = i + 19;
@@ -88,7 +94,7 @@ public class PirateGrep extends GetHTTP {
 						j++;
 					int seedStart = i + 19;
 					int seedEnd = j;
-					dataCache.add(pageHTML.substring(seedStart, seedEnd));
+					seed = pageHTML.substring(seedStart, seedEnd);
 				}
 				if  (pageHTML.charAt(i) == 'L' && pageHTML.charAt(i+1) == 'e' && pageHTML.charAt(i+2) == 'e' && pageHTML.charAt(i+3) == 'c' && pageHTML.charAt(i+4) == 'h' && pageHTML.charAt(i+5) == 'e' && pageHTML.charAt(i+6) == 'r' && pageHTML.charAt(i+7) == 's' && pageHTML.charAt(i+8) == ':'){
 					int j = i + 19;
@@ -96,10 +102,13 @@ public class PirateGrep extends GetHTTP {
 						j++;
 					int leechStart = i + 20;
 					int leechEnd = j;
-					dataCache.add(pageHTML.substring(leechStart, leechEnd));
+					leech = pageHTML.substring(leechStart, leechEnd);
 				}
 			}
-			dataCache.add(detailPage[pageNumber]); // add the page number to the first location of our arrayList
+			dataCache.add(size);
+			dataCache.add(seed);
+			dataCache.add(leech);
+			dataCache.add(pirateTorrentPage[pageNumber]); // add the page number to the first location of our arrayList
 			pageNumber++;
 		}
 		System.out.print("#");
@@ -157,9 +166,9 @@ public class PirateGrep extends GetHTTP {
 		/*
 		 * Given a link like http://thepiratebay.sx/torrent/4510145 will find the download link and return it.
 		 */
-		String torrentDownloadLink = null;
 		boolean firstResult = false;
 		try {
+			String magnetLink = null;
 			String pageHTML = super.getWebPageHTTP(detailsPage);
 			for (int i = 0; i < pageHTML.length(); i++){
 				if (pageHTML.charAt(i) == 'm'
@@ -173,10 +182,11 @@ public class PirateGrep extends GetHTTP {
 					while(pageHTML.charAt(j) != '"')
 						j++;
 					firstResult = true; // these pages contain more then one download link. This ensures you are only getting one
-					torrentDownloadLink = (pageHTML.substring(i,j));
+					magnetLink = (pageHTML.substring(i,j));
+					Variables.magnetLink = magnetLink; //store magnet link in global library
 				}
 			}
-			return torrentDownloadLink;
+			return Variables.magnetLink;
 		}catch (Exception e){
 			return null;
 		}

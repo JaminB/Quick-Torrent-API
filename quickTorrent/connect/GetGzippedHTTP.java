@@ -2,7 +2,7 @@ package connect;
 import java.io.*;
 import java.net.*;
 import java.util.zip.GZIPInputStream;
-import globals.Constants;
+import globals.*;
 
 public class GetGzippedHTTP { 
 	/*
@@ -10,9 +10,10 @@ public class GetGzippedHTTP {
 	 * kickass.to pages are gzipped. This method takes that into account
 	 */
 	public String getWebPageGzipHTTP(String URI){ 
-		String html = "";
+		String renderedPage = "";
+		Variables.currentURI = URI; //store the current URI in our globals library
 		try {
-		    URLConnection connect = new URL(URI).openConnection();                        
+		    URLConnection connect = new URL(Variables.currentURI).openConnection();                        
 		    BufferedReader in = null;
 		    connect.setReadTimeout(Constants.READ_TIMEOUT);
 		    connect.setRequestProperty("User-Agent", Constants.USER_AGENT);
@@ -23,12 +24,13 @@ public class GetGzippedHTTP {
 		    }          
 		    String inputLine;
 		    while ((inputLine = in.readLine()) != null){
-		    html+=inputLine;
+		    renderedPage+=inputLine;
 		    }
 		in.close();
-			return html;
+			Variables.currentWebPage = renderedPage; //store the current webpage in our globals library
+			return Variables.currentWebPage; 
 		} catch (Exception e) {
-			return html;
+			return null;
 		}
 	}
 }
