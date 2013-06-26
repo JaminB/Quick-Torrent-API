@@ -1,4 +1,4 @@
-package converters.Torcache;
+package converters.torcache;
 import connect.GetHTTP;
 public class MagnetToTorrent extends GetHTTP {
 /*
@@ -11,7 +11,7 @@ public class MagnetToTorrent extends GetHTTP {
 	public MagnetToTorrent(String magnetLink){
 		this.magnetLink = magnetLink;
 	}
-	public String GetHash(){
+	public String getHash(){
 		/*
 		 * Strips the hash value from the magnetLink
 		 */
@@ -26,7 +26,7 @@ public class MagnetToTorrent extends GetHTTP {
 	}
 	
 	
-	public String GetTorrentLink(String hash){
+	public String getTorrentLink(String hash){
 		String base = "http://torcache.net/torrent/";
 		if(hash == null)
 			return null;
@@ -34,12 +34,12 @@ public class MagnetToTorrent extends GetHTTP {
 		
 	}
 	
-	public String GetTorrentFilePreview(String torrentURI){
+	public String getTorrentFilePreview(String torrentURI){
 		/*
 		 * Returns the file as a string
 		 */
 		try{
-			return super.GetWebPageHTTP(torrentURI);
+			return super.getWebPageHTTP(torrentURI);
 		}catch(Exception e){
 			return null;
 		}

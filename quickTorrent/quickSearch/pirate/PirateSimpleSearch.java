@@ -1,7 +1,7 @@
-package quickSearch.Pirate;
+package quickSearch.pirate;
 
 
-public class PirateSimpleSearch extends sites.Pirate.PirateRating {
+public class PirateSimpleSearch extends sites.pirate.PirateRating {
 	/*
 	* Takes a search term and a boolean (true == run qualityFilter)
 	*/
@@ -15,12 +15,12 @@ public class PirateSimpleSearch extends sites.Pirate.PirateRating {
 		this.mediaType = mediaType;
 	}	
 	
-	public String FindBestDownload(){
+	public String findBestDownload(){
 		/*
 		 * Use Returns the best magnet link based on your query passed to the Constructor
 		 */
-		super.ConvertToArrays(super.GenerateQueryResults());
-		String bestLink = super.GetBestLink(super.seedArray, super.leechArray, this.mediaType);
-		return super.GrepMagnetLink(bestLink);
+		super.convertToArrays(super.generateQueryResults());
+		String bestLink = super.getBestLink(super.seedArray, super.leechArray, this.mediaType);
+		return super.grepMagnetLink(bestLink);
 	}
 }

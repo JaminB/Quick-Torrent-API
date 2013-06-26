@@ -1,6 +1,6 @@
-package quickSearch.KAT;
+package quickSearch.kat;
 
-public class KATSimpleSearch extends sites.KAT.KATRating {
+public class KATSimpleSearch extends sites.kat.KATRating {
 /*
  * Takes a search term and a boolean (true == run qualityFilter)
  */
@@ -14,12 +14,12 @@ public class KATSimpleSearch extends sites.KAT.KATRating {
 		this.mediaType = mediaType;
 	}	
 	
-	public String FindBestDownload(){
+	public String findBestDownload(){
 		/*
 		 * Use Returns the best magnet link based on your query passed to the Constructor
 		 */
-		super.ConvertToArrays(super.GenerateQueryResults());
-		String bestLink = super.GetBestLink(super.seedArray, super.leechArray, this.mediaType);
-		return super.GrepMagnetLink(bestLink);
+		super.convertToArrays(super.generateQueryResults());
+		String bestLink = super.getBestLink(super.seedArray, super.leechArray, this.mediaType);
+		return super.grepMagnetLink(bestLink);
 	}
 }

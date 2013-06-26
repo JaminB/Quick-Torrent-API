@@ -1,4 +1,4 @@
-package sites.KAT;
+package sites.kat;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class KATGrep extends GetGzippedHTTP {
 	 */
 	ArrayList<String> dataCache = new ArrayList<String>(); //stores the data detailsPage data (seeders, leechers, size, links)
 	
-	public String CreateParsedURI (String searchTerm, String mediaType){ 
+	public String createParsedURI (String searchTerm, String mediaType){ 
 			/*
 			 * Given a search term return the KAT URI.
 			 * example @param: "linkin park in the end/", "music"
@@ -43,7 +43,7 @@ public class KATGrep extends GetGzippedHTTP {
 			return baseURI + parsedQuery + URI;				
 		}
 
-	public String[] GrepDetailsPage(String searchPage){ 
+	public String[] grepDetailsPage(String searchPage){ 
 			/*
 			 * Given a plain HTML page as a string it will parse out the torrent links and return an array of all of them
 			 * This method will take direct input from the KATParseURI method
@@ -80,7 +80,7 @@ public class KATGrep extends GetGzippedHTTP {
 			}
 		}
 	
-	public ArrayList<String> BuildDataCache(String[] detailsPage){
+	public ArrayList<String> buildDataCache(String[] detailsPage){
 		/*
 		 *  Given a list of KAT torrent address returns the seeds, leeches and links in an ArrayList
 		 *  example @param: GrepDetailsPage("https://kickass.to/usearch/linkinpark%20in%20the%20end/")
@@ -89,7 +89,7 @@ public class KATGrep extends GetGzippedHTTP {
 		int pageNumber = 0;
 		while (detailsPage[pageNumber] != null){
 			String URI = detailsPage[pageNumber]; //store the URI in a local variable for convenience
-			String pageHTML = super.GetWebPageGzipHTTP(URI); //pull down the html of the page
+			String pageHTML = super.getWebPageGzipHTTP(URI); //pull down the html of the page
 			String size = null; 
 			String seed = null; 
 			String leech = null;
@@ -130,7 +130,7 @@ public class KATGrep extends GetGzippedHTTP {
 		return dataCache;
 	}
 	
-	public ArrayList <String> QualityFilter(ArrayList <String> dataCache){
+	public ArrayList <String> qualityFilter(ArrayList <String> dataCache){
 		/*
 		 * Quality Check Based on positive/negative rating takes the original cache and filters out bad results
 		 * example @param: GetDataCache() || BuildDataCache("https://kickass.to/usearch/linkinpark%20in%20the%20end/")
@@ -138,10 +138,10 @@ public class KATGrep extends GetGzippedHTTP {
 		ArrayList<String> qualityList = dataCache; //use the original dataCache array list
 		int pageNumber = 0;
 		try{
-			String[] detailsPage = DataCacheToArray(dataCache, "link");
+			String[] detailsPage = dataCacheToArray(dataCache, "link");
 			while (detailsPage[pageNumber] != null){
 				String URI = detailsPage[pageNumber]; //store the URI in a local variable for convenience
-				String pageHTML = super.GetWebPageGzipHTTP(URI); //pull down the html of the page
+				String pageHTML = super.getWebPageGzipHTTP(URI); //pull down the html of the page
 				int fakeCount = 0;
 				int goodCount = 0;
 				for ( int i = 0; i <pageHTML.length() ; i++){
@@ -185,7 +185,7 @@ public class KATGrep extends GetGzippedHTTP {
 		}
 	}
 	
-	public String GrepMagnetLink(String detailsPage){
+	public String grepMagnetLink(String detailsPage){
 		/*
 		 * Given a link this method will find the download link and return it.
 		 * example @param: "https://kickass.to/usearch/linkinpark%20in%20the%20end/"
@@ -193,7 +193,7 @@ public class KATGrep extends GetGzippedHTTP {
 		String torrentDownloadLink = null;
 		boolean firstResult = false;
 		try {
-			String pageHTML = super.GetWebPageGzipHTTP(detailsPage);
+			String pageHTML = super.getWebPageGzipHTTP(detailsPage);
 			for (int i = 0; i < pageHTML.length(); i++){
 				if (pageHTML.charAt(i) == 'm'
 					&& pageHTML.charAt(i+1) == 'a'
@@ -215,7 +215,7 @@ public class KATGrep extends GetGzippedHTTP {
 		}
 	}
 	
-	public ArrayList <String> GetDataCache(){
+	public ArrayList <String> getDataCache(){
 		/* 
 		 * returns the current dataCache
 		 * the BuildDataCache method must be called before this.
@@ -227,7 +227,7 @@ public class KATGrep extends GetGzippedHTTP {
 //********************************************Cache Manipulation METHODS**********************************************************\\
 
 
-	public String[] DataCacheToArray(ArrayList <String> dataCache, String dataField){
+	public String[] dataCacheToArray(ArrayList <String> dataCache, String dataField){
 		/*
 		 * @param: (ArrayList <String> dataCache, "link" || "seed" || "leech" || "size")
 		 * example (BuildDataCache(String[] foo), "size")) will return all the torrent sizes in a string array.
@@ -255,14 +255,14 @@ public class KATGrep extends GetGzippedHTTP {
 	 * Conversion methods are here to make life easier. Otherwise you're going to be parsing ArrayLists. Use them!
 	 */
 	
-	public float[] SizeToFloat(ArrayList <String> queryResults){
+	public float[] sizeToFloat(ArrayList <String> queryResults){
 		/*
 		 * Conversion method used to convert <String> Size value to integer
 		 */
 		try{ 
 			float[] sizeArray = new float[queryResults.size()/4];
 			for (int i = 0; i < queryResults.size()/4; i++){
-				sizeArray[i] = Float.parseFloat(DataCacheToArray(queryResults, "size")[i]);
+				sizeArray[i] = Float.parseFloat(dataCacheToArray(queryResults, "size")[i]);
 			}
 			System.out.print("#");
 			return sizeArray;
@@ -271,14 +271,14 @@ public class KATGrep extends GetGzippedHTTP {
 		}
 	}
 	
-	public int[] SeedToInt(ArrayList <String> queryResults){
+	public int[] seedToInt(ArrayList <String> queryResults){
 		/*
 		 * Conversion method used to convert <String> seeder value to integer
 		 */
 		try{
 			int[] seedArray = new int[queryResults.size()/4];
 			for (int i = 0; i < queryResults.size()/4; i++){
-				seedArray[i] = Integer.parseInt(DataCacheToArray(queryResults, "seed")[i]);
+				seedArray[i] = Integer.parseInt(dataCacheToArray(queryResults, "seed")[i]);
 			}
 			System.out.print("#");
 			return seedArray;
@@ -288,14 +288,14 @@ public class KATGrep extends GetGzippedHTTP {
 		
 	}
 	
-	public int[] LeechToInt(ArrayList <String> dataCache){
+	public int[] leechToInt(ArrayList <String> dataCache){
 		/*
 		 * Conversion method used to convert <String> leecher value to integer
 		 */
 		try{
 			int[] leechArray = new int[dataCache.size()/4];
 			for (int i = 0; i < dataCache.size()/4; i++){
-				leechArray[i] = Integer.parseInt(DataCacheToArray(dataCache, "leech")[i]);
+				leechArray[i] = Integer.parseInt(dataCacheToArray(dataCache, "leech")[i]);
 			}
 			System.out.print("#");
 			return leechArray;

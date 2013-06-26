@@ -1,19 +1,19 @@
 package converters;
 
-import converters.Torcache.MagnetToTorrent;
-import quickSearch.KAT.KATSimpleSearch;
-import quickSearch.Pirate.PirateSimpleSearch;
+import converters.torcache.MagnetToTorrent;
+import quickSearch.kat.KATSimpleSearch;
+import quickSearch.pirate.PirateSimpleSearch;
 public class ConvertTest {
 	
 	public static void main(String[] args) {
 		PirateSimpleSearch Pirate = new PirateSimpleSearch("Return of the king", "movie", true);
 		KATSimpleSearch KAT = new KATSimpleSearch("Return of the king", "movie", true);
-		MagnetToTorrent myPirateConversion = new MagnetToTorrent(Pirate.FindBestDownload());
-		MagnetToTorrent myKATConversion = new MagnetToTorrent(KAT.FindBestDownload());
-		String PirateHash = myPirateConversion.GetHash();
-		String PiratePage = (myPirateConversion.GetTorrentLink(PirateHash));
-		String KATHash = myKATConversion.GetHash();
-		String KATPage = myKATConversion.GetTorrentLink(KATHash);
+		MagnetToTorrent myPirateConversion = new MagnetToTorrent(Pirate.findBestDownload());
+		MagnetToTorrent myKATConversion = new MagnetToTorrent(KAT.findBestDownload());
+		String PirateHash = myPirateConversion.getHash();
+		String PiratePage = (myPirateConversion.getTorrentLink(PirateHash));
+		String KATHash = myKATConversion.getHash();
+		String KATPage = myKATConversion.getTorrentLink(KATHash);
 		System.out.println(PirateHash+"\n"+PiratePage+"\n"+KATHash+"\n"+KATPage);
 		
 	}

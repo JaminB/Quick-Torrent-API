@@ -1,11 +1,11 @@
-package converters.ISO;
+package converters.iso;
 import connect.GetHTTP;
 public class MagnetToTorrent extends GetHTTP {
 	/*
 	 * Depreciated Magnet to Torrent Conversion Class
 	 * The ISO.MagnetToTorrent methods should only be used if Torcache.MagnetToTorrent yields no results
 	 */
-	String torrentFile;
+	String torrentPreview;
 	String magnetLink;
 	
 	public MagnetToTorrent(String magnetLink){
@@ -54,7 +54,7 @@ public class MagnetToTorrent extends GetHTTP {
 				attempts++;
 				if (attempts >= 5)
 					return null; //exit if we are in this loop for over 5 iterations
-				searchPage = super.GetWebPageHTTP(searchLink);
+				searchPage = super.getWebPageHTTP(searchLink);
 				searchLinkStart = searchPage.indexOf("torrent_details") +16 ;
 				int i = 0;
 				searchLinkEnd = searchLinkStart;
@@ -76,12 +76,12 @@ public class MagnetToTorrent extends GetHTTP {
 		
 	}
 	
-	public String GetTorrentFilePreview(String torrentURI){
+	public String GetTorrentPreview(String torrentURI){
 		/*
 		 * Returns the file as a string
 		 */
 		try{
-			return super.GetWebPageHTTP(torrentURI);
+			return super.getWebPageHTTP(torrentURI);
 		}catch(Exception e){
 			return null;
 		}

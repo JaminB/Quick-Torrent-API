@@ -1,4 +1,4 @@
-package sites.Pirate;
+package sites.pirate;
 
 import java.util.ArrayList;
 
@@ -19,35 +19,35 @@ public class PirateRating extends PirateGrep {
 		/*
 		 * Constructor, two arguments the search query and a boolean, true == scan comments, false == do not scan comments
 		 */
-		String currentSearch = CreateParsedURI(query, mediaType); //returns the parsed URI query
-		String searchResultHTML = super.GetWebPageHTTP(currentSearch); //pulls down the html from the URI given
-		torrentPages = super.GrepDetailsPage(searchResultHTML); //finds each torrent page link
+		String currentSearch = createParsedURI(query, mediaType); //returns the parsed URI query
+		String searchResultHTML = super.getWebPageHTTP(currentSearch); //pulls down the html from the URI given
+		torrentPages = super.grepDetailsPage(searchResultHTML); //finds each torrent page link
 		qc = qualityCheck;
 	}
 	
-	public ArrayList <String> GenerateQueryResults(){ 
+	public ArrayList <String> generateQueryResults(){ 
 		/*
 		 * Uses methods from PageGrep and PageFunc to generate a list of candidate torrents
 		 * This method must be called after the constructor
 		 */
 		boolean qualityCheck = this.qc;
-		super.BuildDataCache(this.torrentPages);
-		if (qualityCheck) return super.QualityFilter(super.GetDataCache()); //run it through a quality check (takes a bit longer)
+		super.buildDataCache(this.torrentPages);
+		if (qualityCheck) return super.qualityFilter(super.GetDataCache()); //run it through a quality check (takes a bit longer)
 		else return super.GetDataCache(); //skip quality check
 	}
 	
-	public void ConvertToArrays(ArrayList <String> queryResults){
+	public void convertToArrays(ArrayList <String> queryResults){
 		/*
 		 * Converts the ArrayList <String> into the separate Arrays of the correct datatype
 		 * The easiest way to implement this method is passing the GenerateQueryResults() directly to it.
 		 */
-		sizeArray = super.SizeToFloat(queryResults);
-		seedArray = super.SeedToInt(queryResults);
-		leechArray = super.LeechToInt(queryResults);
-		linkArray = super.DataCacheToArray(queryResults, "link");
+		sizeArray = super.sizeToFloat(queryResults);
+		seedArray = super.seedToInt(queryResults);
+		leechArray = super.leechToInt(queryResults);
+		linkArray = super.dataCacheToArray(queryResults, "link");
 	}
 	
-	public String GetBestLink(int[] seedArray, int[] leechArray, String mediaType){
+	public String getBestLink(int[] seedArray, int[] leechArray, String mediaType){
 		/*
 		 * Determines the best link to pull the torrent from.
 		 */
@@ -78,5 +78,3 @@ public class PirateRating extends PirateGrep {
 		}
 	}
 }
-	
-

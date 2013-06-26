@@ -1,4 +1,4 @@
-package sites.Pirate;
+package sites.pirate;
 import java.util.ArrayList;
 
 import connect.GetHTTP;
@@ -13,7 +13,7 @@ public class PirateGrep extends GetHTTP {
 	 */
 	ArrayList<String> dataCache = new ArrayList<String>(); //stores the data detailsPage data (seeders, leechers, size, links)
 	
-	public String CreateParsedURI (String searchTerm, String mediaType){ 
+	public String createParsedURI (String searchTerm, String mediaType){ 
 		/*
 		 * Given a search term return the Piratebay URI.
 		 * example @param "linkin park in the end", "music"
@@ -37,7 +37,7 @@ public class PirateGrep extends GetHTTP {
 		return baseURI + parsedQuery + URI;				
 	}
 	
-	public String[] GrepDetailsPage(String searchPage){ 
+	public String[] grepDetailsPage(String searchPage){ 
 		/*
 		 * Given a plain HTML page as a string it will parse out the detail page links and return an array of all of them
 		 * This method will take direct input from the GetParseURI method
@@ -63,7 +63,7 @@ public class PirateGrep extends GetHTTP {
 		return detailPage;
 	}
 	
-	public ArrayList<String> BuildDataCache(String[] detailPage){
+	public ArrayList<String> buildDataCache(String[] detailPage){
 		/*
 		 *  Given a string array of Detail Pages will return the stats of each page in an array list
 		 *  example @param GrepDetailsPage("http://thepiratebay.sx/search/linkin%20park%20in%20the%20end/0/99/100")
@@ -72,7 +72,7 @@ public class PirateGrep extends GetHTTP {
 		int pageNumber = 0;
 		while (detailPage[pageNumber] != null){
 			String URI = detailPage[pageNumber]; //store the URI in a local variable for convenience
-			String pageHTML = super.GetWebPageHTTP(URI); //pull down the html of the page
+			String pageHTML = super.getWebPageHTTP(URI); //pull down the html of the page
 			for ( int i = 0; i <pageHTML.length() ; i++){
 				if(pageHTML.charAt(i) == 'S' && pageHTML.charAt(i+1) == 'i' && pageHTML.charAt(i+2) == 'z' && pageHTML.charAt(i+3) == 'e'&& pageHTML.charAt(i+4) == ':' && pageHTML.charAt(i+5) == '<' && pageHTML.charAt(i+6) == '/') {
 						int j = i + 16;
@@ -104,7 +104,7 @@ public class PirateGrep extends GetHTTP {
 		return dataCache;
 	}
 	
-	public ArrayList <String> QualityFilter(ArrayList <String> dataCache ){ 
+	public ArrayList <String> qualityFilter(ArrayList <String> dataCache ){ 
 		/*
 		 * Quality Check Based on comments takes the original cache and filters out bad results
 		 * example @param GetDataCache() || BuildDataCache("http://thepiratebay.sx/search/linkin%20park%20in%20the%20end/0/99/100")
@@ -112,10 +112,10 @@ public class PirateGrep extends GetHTTP {
 		ArrayList<String> qualityList = dataCache; //use the original dataCache array list
 		int pageNumber = 0;
 		try{
-			String[] detailsPage = DataCacheToArray(dataCache, "link");
+			String[] detailsPage = dataCacheToArray(dataCache, "link");
 				while (detailsPage[pageNumber] != null){
 					String URI = detailsPage[pageNumber]; //store the URI in a local variable for convenience
-					String pageHTML = super.GetWebPageHTTP(URI);
+					String pageHTML = super.getWebPageHTTP(URI);
 					//Word List -------------------------------------------------------------------
 						if  (pageHTML.toLowerCase().contains("virus") 
 							|| pageHTML.toLowerCase().contains("trojan")
@@ -151,14 +151,14 @@ public class PirateGrep extends GetHTTP {
 		return dataCache;
 	}
 		
-	public String GrepMagnetLink(String detailsPage){
+	public String grepMagnetLink(String detailsPage){
 		/*
 		 * Given a link like http://thepiratebay.sx/torrent/4510145 will find the download link and return it.
 		 */
 		String torrentDownloadLink = null;
 		boolean firstResult = false;
 		try {
-			String pageHTML = super.GetWebPageHTTP(detailsPage);
+			String pageHTML = super.getWebPageHTTP(detailsPage);
 			for (int i = 0; i < pageHTML.length(); i++){
 				if (pageHTML.charAt(i) == 'm'
 					&& pageHTML.charAt(i+1) == 'a'
@@ -184,7 +184,7 @@ public class PirateGrep extends GetHTTP {
 //********************************************Cache Manipulation METHODS**********************************************************\\
 
 	
-	public String[] DataCacheToArray(ArrayList <String> dataCache, String dataField){
+	public String[] dataCacheToArray(ArrayList <String> dataCache, String dataField){
 		/*
 		 * @param (ArrayList <String> dataCache, "link" || "seed" || "leech" || "size")
 		 * example (BuildDataCache(String[] foo), "size")) will return all the torrent sizes in a string array.
@@ -212,14 +212,14 @@ public class PirateGrep extends GetHTTP {
 	 * Conversion methods are here to make life easier. Otherwise you're going to be parsing ArrayLists. Use them!
 	 */
 	
-	public float[] SizeToFloat(ArrayList <String> queryResults){
+	public float[] sizeToFloat(ArrayList <String> queryResults){
 		/*
 		 * Conversion method used to convert <String> Size value to integer
 		 */
 		try{ 
 			float[] sizeArray = new float[queryResults.size()/4];
 			for (int i = 0; i < queryResults.size()/4; i++){
-				sizeArray[i] = Float.parseFloat(DataCacheToArray(queryResults, "size")[i]);
+				sizeArray[i] = Float.parseFloat(dataCacheToArray(queryResults, "size")[i]);
 			}
 			System.out.print("#");
 			return sizeArray;
@@ -228,14 +228,14 @@ public class PirateGrep extends GetHTTP {
 		}
 	}
 	
-	public int[] SeedToInt(ArrayList <String> queryResults){
+	public int[] seedToInt(ArrayList <String> queryResults){
 		/*
 		 * Conversion method used to convert <String> seeder value to integer
 		 */
 		try{
 			int[] seedArray = new int[queryResults.size()/4];
 			for (int i = 0; i < queryResults.size()/4; i++){
-				seedArray[i] = Integer.parseInt(DataCacheToArray(queryResults, "seed")[i]);
+				seedArray[i] = Integer.parseInt(dataCacheToArray(queryResults, "seed")[i]);
 			}
 			System.out.print("#");
 			return seedArray;
@@ -245,14 +245,14 @@ public class PirateGrep extends GetHTTP {
 		
 	}
 	
-	public int[] LeechToInt(ArrayList <String> dataCache){
+	public int[] leechToInt(ArrayList <String> dataCache){
 		/*
 		 * Conversion method used to convert <String> leecher value to integer
 		 */
 		try{
 			int[] leechArray = new int[dataCache.size()/4];
 			for (int i = 0; i < dataCache.size()/4; i++){
-				leechArray[i] = Integer.parseInt(DataCacheToArray(dataCache, "leech")[i]);
+				leechArray[i] = Integer.parseInt(dataCacheToArray(dataCache, "leech")[i]);
 			}
 			System.out.print("#");
 			return leechArray;

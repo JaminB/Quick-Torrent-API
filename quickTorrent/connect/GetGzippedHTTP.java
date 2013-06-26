@@ -8,7 +8,7 @@ public class GetGzippedHTTP {
 	 * Given a URI this method will grab the html from that page using http protocol 
 	 * kickass.to pages are gzipped. This method takes that into account
 	 */
-	public String GetWebPageGzipHTTP(String URI){ 
+	public String getWebPageGzipHTTP(String URI){ 
 		String html = "";
 		try {
 		    URLConnection connect = new URL(URI).openConnection();                        
