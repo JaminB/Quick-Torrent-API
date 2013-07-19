@@ -1,4 +1,4 @@
-package quickSearch.kat;
+package sites.kat;
 
 public class KATSimpleSearch extends sites.kat.KATRating {
 /*

@@ -22,15 +22,10 @@ public class Variables {
 	public static boolean qualityCheck; //Safe-search enabled
 	
 	//Not converted raw strings
-	public static String seedCountAsString; //Number of seeds of the most recently searched torrent as a String
-	public static String leechCountAsString; //Number of leeches for the most recently searched torrent a String
-	public static String sizeCountAsString; //Size of the most recently searched torrent as a float
-	
-	//Converted to proper datatypes
-	public static int seedCountAsInt; //Number of seeds of the most recently searched torrent as an integer
-	public static int leechCountAsInt; //Number of leeches for the most recently searched torrent an integer
-	public static float sizeCountAsFloat; //Size of the most recently searched torrent as a float
-	
+	public static String seedCount; //Number of seeds of the most recently searched torrent as a String
+	public static String leechCount; //Number of leeches for the most recently searched torrent a String
+	public static String sizeCount; //Size of the most recently searched torrent as a float
+
 
 	
 	

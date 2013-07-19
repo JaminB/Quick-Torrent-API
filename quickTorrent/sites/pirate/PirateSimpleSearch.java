@@ -1,4 +1,4 @@
-package quickSearch.pirate;
+package sites.pirate;
 
 
 public class PirateSimpleSearch extends sites.pirate.PirateRating {

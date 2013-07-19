@@ -68,12 +68,14 @@ public class KATGrep extends GetGzippedHTTP {
 						while (p.charAt(linkEnd) != '"')
 							linkEnd++;
 							KATTorrentPage[result] = (Constants.KAT_BASE+p.substring(linkStart, linkEnd));
+							Variables.lastSearch.add(KATTorrentPage[result]);
 						result++;
+						
 					}
 					
 				}
 				System.out.println("Found: " + result);
-				Variables.lastSearch.add(KATTorrentPage[result]); //adds the query to the global last search list
+				//adds the query to the global last search list
 				return KATTorrentPage;
 			}catch(Exception e){
 				return null;

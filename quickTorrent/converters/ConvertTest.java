@@ -1,8 +1,8 @@
 package converters;
 
 import converters.torcache.MagnetToTorrent;
-import quickSearch.kat.KATSimpleSearch;
-import quickSearch.pirate.PirateSimpleSearch;
+import sites.kat.KATSimpleSearch;
+import sites.pirate.PirateSimpleSearch;
 public class ConvertTest {
 	
 	public static void main(String[] args) {

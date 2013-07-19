@@ -1,13 +1,12 @@
-package quickSearch.pirate;
+package sites.kat;
 
 import globals.Variables;
-import quickSearch.pirate.PirateSimpleSearch;
 
-public class PirateTest {
+public class KATSimpleSearchTest {
 	public static void main(String[] args) {
-		PirateSimpleSearch mySearch = new PirateSimpleSearch("In the end", "music", true);
+		KATSimpleSearch mySearch = new KATSimpleSearch("Bad Teacher (english)", "movie", true);
 		System.out.println(mySearch.findBestDownload());
 		System.out.println("All links searched: " + Variables.lastSearch);
-	}
 
+	}
 }
