@@ -4,9 +4,10 @@ import globals.Variables;
 
 public class PirateSimpleSearchTest {
 	public static void main(String[] args) {
-		PirateSimpleSearch mySearch = new PirateSimpleSearch("The Unforgiven Metallica II", "music", true);
-		System.out.println(mySearch.findBestDownload());
+		PirateSimpleSearch mySearch = new PirateSimpleSearch("Prometheus", "movie", true);
+		System.out.print("Processing: ");
+		System.out.println("Best Magnet Link: " + mySearch.findBestDownload());
 		System.out.println("All links searched: " + Variables.lastSearch);
+		System.out.println("Cache: " + Variables.cache);
 	}
-
 }

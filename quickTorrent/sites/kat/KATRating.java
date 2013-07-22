@@ -1,9 +1,12 @@
 package sites.kat;
 
+import connect.GetGzippedHTTP;
 import java.util.ArrayList;
 
 
-public class KATRating extends KATGrep {
+
+public class KATRating extends KATBuildCache {
+	GetGzippedHTTP conn = new GetGzippedHTTP();
 	/*
 	 * Finds the best Piratebay torrent based on data gleaned using the PirateGrep Class
 	 */
@@ -19,7 +22,7 @@ public class KATRating extends KATGrep {
 		 * Constructor, two arguments the search query and a boolean, true == scan comments, false == do not scan comments
 		 */
 		String currentSearch = createParsedURI(query, mediaType); //returns the parsed URI query
-		String searchResultHTML = super.getWebPageGzipHTTP(currentSearch); //pulls down the html from the URI given
+		String searchResultHTML = conn.getWebPageGzipHTTP(currentSearch); //pulls down the html from the URI given
 		torrentPages = super.grepDetailsPage(searchResultHTML); //finds each torrent page link
 		qc = qualityCheck;
 	}

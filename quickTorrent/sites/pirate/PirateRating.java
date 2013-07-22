@@ -1,9 +1,11 @@
 package sites.pirate;
 
 import java.util.ArrayList;
+import connect.GetHTTP;
 
 
-public class PirateRating extends PirateGrep {
+public class PirateRating extends PirateBuildCache {
+	GetHTTP conn = new GetHTTP();
 	/*
 	 * Finds the best Piratebay torrent based on data gleaned using the PirateGrep Class
 	 */
@@ -20,7 +22,7 @@ public class PirateRating extends PirateGrep {
 		 * Constructor, two arguments the search query and a boolean, true == scan comments, false == do not scan comments
 		 */
 		String currentSearch = createParsedURI(query, mediaType); //returns the parsed URI query
-		String searchResultHTML = super.getWebPageHTTP(currentSearch); //pulls down the html from the URI given
+		String searchResultHTML = conn.getWebPageHTTP(currentSearch); //pulls down the html from the URI given
 		torrentPages = super.grepDetailsPage(searchResultHTML); //finds each torrent page link
 		qc = qualityCheck;
 	}

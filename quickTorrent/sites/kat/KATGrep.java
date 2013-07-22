@@ -1,18 +1,16 @@
 package sites.kat;
 
 import globals.*;
-import java.util.ArrayList;
-import connect.GetGzippedHTTP;
 
 
-public class KATGrep extends GetGzippedHTTP {
+public class KATGrep {
 	/*
 	 *Provides the methods to search URIs it extends the basic functionality of the PiratePageBase class
 	 *Finds # of seeds, # of leeches, and detailPage links (these are the pages that hold the torrent download links not the .torrent itself)
 	 *Can determine based on comments whether a torrent link contains a decent quality download
 	 *Can find the size of a file.
 	 */
-	ArrayList<String> dataCache = new ArrayList<String>(); //stores the data detailsPage data (seeders, leechers, size, links)
+	
 	
 	public String createParsedURI (String searchTerm, String mediaType){ 
 			/*
@@ -50,7 +48,7 @@ public class KATGrep extends GetGzippedHTTP {
 			 */
 			String p = searchPage;
 			int result = 0;
-			String[] KATTorrentPage = new String[26]; //holds the top 30 results
+			String[] detailsPage = new String[26]; //holds the top 30 results
 			try {
 				for (int i = 0; i<p.length(); i++){
 					if(p.charAt(i) == 't'
@@ -67,8 +65,8 @@ public class KATGrep extends GetGzippedHTTP {
 						int linkEnd = linkStart+2;
 						while (p.charAt(linkEnd) != '"')
 							linkEnd++;
-							KATTorrentPage[result] = (Constants.KAT_BASE+p.substring(linkStart, linkEnd));
-							Variables.lastSearch.add(KATTorrentPage[result]);
+							detailsPage[result] = (Constants.KAT_BASE+p.substring(linkStart, linkEnd));
+							Variables.lastSearch.add(detailsPage[result]);
 						result++;
 						
 					}
@@ -76,115 +74,54 @@ public class KATGrep extends GetGzippedHTTP {
 				}
 				System.out.println("Found: " + result);
 				//adds the query to the global last search list
-				return KATTorrentPage;
+				return detailsPage;
 			}catch(Exception e){
 				return null;
 			}
 		}
-	
-	public ArrayList<String> buildDataCache(String[] detailsPage){
-		/*
-		 *  Given a list of KAT torrent address returns the seeds, leeches and links in an ArrayList
-		 *  example @param: GrepDetailsPage("https://kickass.to/usearch/linkinpark%20in%20the%20end/")
-		 */
-		dataCache = new ArrayList<String>();
-		int pageNumber = 0;
-		while (detailsPage[pageNumber] != null){
-			String URI = detailsPage[pageNumber]; //store the URI in a local variable for convenience
-			String pageHTML = super.getWebPageGzipHTTP(URI); //pull down the html of the page
-			String size = null; 
-			String seed = null; 
-			String leech = null;
-			for ( int i = 0; i <pageHTML.length() ; i++){
-				
-				if  (pageHTML.charAt(i) == '('  && pageHTML.charAt(i+1) == 'S' && pageHTML.charAt(i+2) == 'i' && pageHTML.charAt(i+3) == 'z' && pageHTML.charAt(i+4) == 'e' && pageHTML.charAt(i+5) == ':'){
-					int sizeStart = i + 7;
-					int sizeEnd = i + 7;
-					while (pageHTML.charAt(sizeEnd) != ' ')
-						sizeEnd++;
-					size = (pageHTML.substring(sizeStart, sizeEnd));
-				}
-		
-				if  (pageHTML.charAt(i) == 's'  && pageHTML.charAt(i+1) == 'e' && pageHTML.charAt(i+2) == 'e' && pageHTML.charAt(i+3) == 'd' && pageHTML.charAt(i+4) == 'e' && pageHTML.charAt(i+5) == 'r'  && pageHTML.charAt(i+6) == 's'  && pageHTML.charAt(i+8) == '>'){
-					int seedStart = i + 9;
-					int seedEnd = i + 9;
-					while (pageHTML.charAt(seedEnd) != '<')
-						seedEnd++;
-					seed = (pageHTML.substring(seedStart, seedEnd));
-				}
-				
-				if  (pageHTML.charAt(i) == 'l' && pageHTML.charAt(i+1) == 'e' && pageHTML.charAt(i+2) == 'e' && pageHTML.charAt(i+3) == 'c' && pageHTML.charAt(i+4) == 'h' && pageHTML.charAt(i+5) == 'e' && pageHTML.charAt(i+6) == 'r' && pageHTML.charAt(i+7) == 's' && pageHTML.charAt(i+8) == '"'){
-					int leechStart = i + 10;
-					int leechEnd = i + 10;
-					while (pageHTML.charAt(leechEnd) != '<')
-						leechEnd++;
-					leech = (pageHTML.substring(leechStart, leechEnd));
-				}
+	public String grepSize (String detailsPage){
+		String size = null;
+		for ( int i = 0; i <detailsPage.length() ; i++){
+			
+			if  (detailsPage.charAt(i) == '('  && detailsPage.charAt(i+1) == 'S' && detailsPage.charAt(i+2) == 'i' && detailsPage.charAt(i+3) == 'z' && detailsPage.charAt(i+4) == 'e' && detailsPage.charAt(i+5) == ':'){
+				int sizeStart = i + 7;
+				int sizeEnd = i + 7;
+				while (detailsPage.charAt(sizeEnd) != ' ')
+					sizeEnd++;
+				size = (detailsPage.substring(sizeStart, sizeEnd));
 			}
-			dataCache.add(size);
-			dataCache.add(seed);
-			dataCache.add(leech);
-		
-			dataCache.add(detailsPage[pageNumber]); // add the page number to the first location of our arrayList
-			pageNumber++;
 		}
-		System.out.print("#");
-		return dataCache;
+		Variables.sizeCount = size;
+		return size;
 	}
 	
-	public ArrayList <String> qualityFilter(ArrayList <String> dataCache){
-		/*
-		 * Quality Check Based on positive/negative rating takes the original cache and filters out bad results
-		 * example @param: GetDataCache() || BuildDataCache("https://kickass.to/usearch/linkinpark%20in%20the%20end/")
-		 */
-		ArrayList<String> qualityList = dataCache; //use the original dataCache array list
-		int pageNumber = 0;
-		try{
-			String[] detailsPage = dataCacheToArray(dataCache, "link");
-			while (detailsPage[pageNumber] != null){
-				String URI = detailsPage[pageNumber]; //store the URI in a local variable for convenience
-				String pageHTML = super.getWebPageGzipHTTP(URI); //pull down the html of the page
-				int fakeCount = 0;
-				int goodCount = 0;
-				for ( int i = 0; i <pageHTML.length() ; i++){
-					
-					if  (pageHTML.charAt(i) == 'f'  && pageHTML.charAt(i+1) == 'a' && pageHTML.charAt(i+2) == 'k' && pageHTML.charAt(i+3) == 'e' && pageHTML.charAt(i+8) == 't' && pageHTML.charAt(i+16) == '>'){
-						int fakeCountStart = i + 17;
-						int fakeCountEnd = i + 18;
-						while (pageHTML.charAt(fakeCountEnd) != '<')
-							fakeCountEnd++;
-						fakeCount = Integer.parseInt((pageHTML.substring(fakeCountStart, fakeCountEnd))); // get the integer value of the fakeCount (thumbs down)
-					}
-					if  (pageHTML.charAt(i) == 't'  && pageHTML.charAt(i+1) == 'h' && pageHTML.charAt(i+2) == 'n' && pageHTML.charAt(i+3) == 'x' && pageHTML.charAt(i+8) == 't' && pageHTML.charAt(i+16) == '>'){
-						int goodCountStart = i + 17;
-						int goodCountEnd = i + 18;
-						while (pageHTML.charAt(goodCountEnd) != '<')
-							goodCountEnd++;
-						if (pageHTML.substring(goodCountStart, goodCountEnd).charAt(0) == '+') //parse out the + sign so these can be evaluated to integers
-							goodCount = Integer.parseInt(pageHTML.substring(goodCountStart + 1, goodCountEnd));
-						else
-							goodCount = Integer.parseInt(pageHTML.substring(goodCountStart, goodCountEnd));
-					}
-					
+	public String grepSeeds(String detailsPage){
+		String seed = null;
+		for ( int i = 0; i <detailsPage.length() ; i++){
+			if  (detailsPage.charAt(i) == 's'  && detailsPage.charAt(i+1) == 'e' && detailsPage.charAt(i+2) == 'e' && detailsPage.charAt(i+3) == 'd' && detailsPage.charAt(i+4) == 'e' && detailsPage.charAt(i+5) == 'r'  && detailsPage.charAt(i+6) == 's'  && detailsPage.charAt(i+8) == '>'){
+				int seedStart = i + 9;
+				int seedEnd = i + 9;
+				while (detailsPage.charAt(seedEnd) != '<')
+					seedEnd++;
+				seed = (detailsPage.substring(seedStart, seedEnd));
 			}
-				if(fakeCount*10 >= goodCount || pageHTML.contains(".m4p")){
-					
-					int badStart =  qualityList.indexOf(URI) - 3; //shift back 3 since we want to delete from size which is the first entry
-					//System.out.println("Bad Quality " + badStart+" -- removing"+"\n");
-					qualityList.remove(badStart); //remove size
-					qualityList.remove(badStart); //remove seeder
-					qualityList.remove(badStart); //remove leecher
-					qualityList.remove(badStart); //remove links
-				}
-				
-					
-			pageNumber++;
-			//System.out.print("#");
-			}
-			return qualityList;
-		}catch(Exception e){
-			return null;
 		}
+		Variables.seedCount = seed;
+		return seed;
+	}
+	public String grepLeeches(String detailsPage){
+		String leech = null;
+		for ( int i = 0; i <detailsPage.length() ; i++){
+			if  (detailsPage.charAt(i) == 'l' && detailsPage.charAt(i+1) == 'e' && detailsPage.charAt(i+2) == 'e' && detailsPage.charAt(i+3) == 'c' && detailsPage.charAt(i+4) == 'h' && detailsPage.charAt(i+5) == 'e' && detailsPage.charAt(i+6) == 'r' && detailsPage.charAt(i+7) == 's' && detailsPage.charAt(i+8) == '"'){
+				int leechStart = i + 10;
+				int leechEnd = i + 10;
+				while (detailsPage.charAt(leechEnd) != '<')
+					leechEnd++;
+				leech = (detailsPage.substring(leechStart, leechEnd));
+			}
+		}
+		Variables.leechCount = leech;
+		return leech;
 	}
 	
 	public String grepMagnetLink(String detailsPage){
@@ -195,20 +132,19 @@ public class KATGrep extends GetGzippedHTTP {
 		String torrentDownloadLink = null;
 		boolean firstResult = false;
 		try {
-			String pageHTML = super.getWebPageGzipHTTP(detailsPage);
-			for (int i = 0; i < pageHTML.length(); i++){
-				if (pageHTML.charAt(i) == 'm'
-					&& pageHTML.charAt(i+1) == 'a'
-					&& pageHTML.charAt(i+2) == 'g'
-					&& pageHTML.charAt(i+3) == 'n'
-					&& pageHTML.charAt(i+6) == ':'
-					&& pageHTML.charAt(i+7) == '?'
+			for (int i = 0; i < detailsPage.length(); i++){
+				if (detailsPage.charAt(i) == 'm'
+					&& detailsPage.charAt(i+1) == 'a'
+					&& detailsPage.charAt(i+2) == 'g'
+					&& detailsPage.charAt(i+3) == 'n'
+					&& detailsPage.charAt(i+6) == ':'
+					&& detailsPage.charAt(i+7) == '?'
 					&& firstResult == false){
 					int j = i;
-					while(pageHTML.charAt(j) != '"')
+					while(detailsPage.charAt(j) != '"')
 						j++;
 					firstResult = true; // these pages contain more then one download link. This ensures you are only getting one
-					torrentDownloadLink = (pageHTML.substring(i,j));
+					torrentDownloadLink = (detailsPage.substring(i,j));
 				}
 			}
 			return torrentDownloadLink;
@@ -217,92 +153,12 @@ public class KATGrep extends GetGzippedHTTP {
 		}
 	}
 	
-	public ArrayList <String> getDataCache(){
-		/* 
-		 * returns the current dataCache
-		 * the BuildDataCache method must be called before this.
-		 */
-		return dataCache;
-	}
+
 	
 	
-//********************************************Cache Manipulation METHODS**********************************************************\\
-
-
-	public String[] dataCacheToArray(ArrayList <String> dataCache, String dataField){
-		/*
-		 * @param: (ArrayList <String> dataCache, "link" || "seed" || "leech" || "size")
-		 * example (BuildDataCache(String[] foo), "size")) will return all the torrent sizes in a string array.
-		 * Parses the SizeStats ArrayList into one dimensional array (seeders, leechers, links, size)
-		 */
-		try{
-			String[] parsedArray = new String[dataCache.size()];
-			int listPos = 0;
-			if(dataField.equals("link")) listPos = 3;
-			if(dataField.equals("leech"))listPos = 2;
-			if(dataField.equals("seed")) listPos = 1;
-			if(dataField.equals("size")) listPos = 0;
-			for (int i = 0; i < dataCache.size()/4; i++){
-				parsedArray[i] = dataCache.get(listPos);
-				listPos = listPos+4;
-			}
-			System.out.print("#");
-			return parsedArray;
-		}catch(Exception e){
-			return null;
-		}
-	}
 	
 	/*
 	 * Conversion methods are here to make life easier. Otherwise you're going to be parsing ArrayLists. Use them!
 	 */
 	
-	public float[] sizeToFloat(ArrayList <String> queryResults){
-		/*
-		 * Conversion method used to convert <String> Size value to integer
-		 */
-		try{ 
-			float[] sizeArray = new float[queryResults.size()/4];
-			for (int i = 0; i < queryResults.size()/4; i++){
-				sizeArray[i] = Float.parseFloat(dataCacheToArray(queryResults, "size")[i]);
-			}
-			System.out.print("#");
-			return sizeArray;
-		}catch (Exception e){
-			return null;
-		}
-	}
-	
-	public int[] seedToInt(ArrayList <String> queryResults){
-		/*
-		 * Conversion method used to convert <String> seeder value to integer
-		 */
-		try{
-			int[] seedArray = new int[queryResults.size()/4];
-			for (int i = 0; i < queryResults.size()/4; i++){
-				seedArray[i] = Integer.parseInt(dataCacheToArray(queryResults, "seed")[i]);
-			}
-			System.out.print("#");
-			return seedArray;
-		}catch (Exception e){
-			return null;
-		}
-		
-	}
-	
-	public int[] leechToInt(ArrayList <String> dataCache){
-		/*
-		 * Conversion method used to convert <String> leecher value to integer
-		 */
-		try{
-			int[] leechArray = new int[dataCache.size()/4];
-			for (int i = 0; i < dataCache.size()/4; i++){
-				leechArray[i] = Integer.parseInt(dataCacheToArray(dataCache, "leech")[i]);
-			}
-			System.out.print("#");
-			return leechArray;
-		}catch (Exception e) {
-			return null;
-		}
-	}
 }
