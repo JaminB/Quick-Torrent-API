@@ -6,7 +6,7 @@ An extensive tracker-site data-mining API, containing methods that allow anythin
 	Provides methods for converting magnet links to torrent files for download.
 	Provides methods for ranking and comparing torrents.
 Currently supports the piratebay.sx and kickass.to
-________________________________________________________________________________________________________________________________________________________ 
+ 
 Package Structure: 
 
 Summary:
@@ -16,7 +16,7 @@ converters == Implements the connect package to make convert magnet links to tor
 fileIO == Implements native java.net and java.io libraries to download binaries
 quickSearch == Implements the sites package, used to find the best torrent link
 sites == Implements the connect package, contains methods for gleaning information about torrent health and size.
-________________________________________________________________________________________________________________________________________________________
+
 
 Package Relationships:
 
@@ -24,7 +24,6 @@ Package Relationships:
 connect --> sites --> quickSearch
 connect --> converters
 fileIO
-________________________________________________________________________________________________________________________________________________________
 	  
 Classes:
 
