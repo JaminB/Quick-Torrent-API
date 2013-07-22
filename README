@@ -11,13 +11,13 @@ Currently supports the piratebay.sx and kickass.to
 -------------------------------------------------------------------------------
                               The sites package
 -------------------------------------------------------------------------------
-	The sites package contains all the classes associated with a specific site. 
-	These classes contain methods for searching and ranking torrents on tracker sites.
+The sites package contains all the classes associated with a specific site. 
+These classes contain methods for searching and ranking torrents on tracker sites.
 	
-	Class hierarchy within the sites package (top to bottom):
-		 SimpleSearch extends Rating;
-		 Rating extends BuildCache;
-		 KATBuildCache extends KATGrep;
+Class hierarchy within the sites package (top to bottom):
+	SimpleSearch extends Rating;
+	Rating extends BuildCache;
+	KATBuildCache extends KATGrep;
 		 
 ----------------------
 The Traversal Routine:
