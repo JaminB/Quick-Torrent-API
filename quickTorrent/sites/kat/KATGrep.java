@@ -1,7 +1,5 @@
 package sites.kat;
-
 import globals.*;
-
 
 public class KATGrep {
 	/*
@@ -10,7 +8,6 @@ public class KATGrep {
 	 *Can determine based on comments whether a torrent link contains a decent quality download
 	 *Can find the size of a file.
 	 */
-	
 	
 	public String createParsedURI (String searchTerm, String mediaType){ 
 			/*
@@ -37,14 +34,13 @@ public class KATGrep {
 				else
 					parsedQuery = parsedQuery + searchTerm.charAt(i);
 			}
-			return baseURI + parsedQuery + URI; //returns the search page				
+			return baseURI + parsedQuery + URI; //returns the search 			
 		}
 
-	public String[] grepDetailsPage(String searchPage){ 
+	public String[] grepDetailsURI(String searchPage){ 
 			/*
 			 * Given a plain HTML page as a string it will parse out the torrent links and return an array of all of them
-			 * This method will take direct input from the KATParseURI method
-			 * example @param: "https://kickass.to/usearch/linkinpark%20in%20the%20end/"
+			 * 
 			 */
 			String p = searchPage;
 			int result = 0;
@@ -70,7 +66,6 @@ public class KATGrep {
 						result++;
 						
 					}
-					
 				}
 				System.out.println("Found: " + result);
 				//adds the query to the global last search list
@@ -80,6 +75,10 @@ public class KATGrep {
 			}
 		}
 	public String grepSize (String detailsPage){
+		/*
+		 * Given a detailsPage this method will return the size associated with a torrents
+		 * example @param: "https://kickass.to/usearch/linkinpark%20in%20the%20end/"
+		 */
 		String size = null;
 		for ( int i = 0; i <detailsPage.length() ; i++){
 			
@@ -96,6 +95,10 @@ public class KATGrep {
 	}
 	
 	public String grepSeeds(String detailsPage){
+		/*
+		 * Given a detailsPage this method will return the seeds associated with a torrent
+		 * example @param: "https://kickass.to/usearch/linkinpark%20in%20the%20end/"
+		 */
 		String seed = null;
 		for ( int i = 0; i <detailsPage.length() ; i++){
 			if  (detailsPage.charAt(i) == 's'  && detailsPage.charAt(i+1) == 'e' && detailsPage.charAt(i+2) == 'e' && detailsPage.charAt(i+3) == 'd' && detailsPage.charAt(i+4) == 'e' && detailsPage.charAt(i+5) == 'r'  && detailsPage.charAt(i+6) == 's'  && detailsPage.charAt(i+8) == '>'){
@@ -109,7 +112,13 @@ public class KATGrep {
 		Variables.seedCount = seed;
 		return seed;
 	}
+	
 	public String grepLeeches(String detailsPage){
+		/*
+		 * Given a detailsPage this method will return the leeches associated with a torrent
+		 * example @param: "https://kickass.to/usearch/linkinpark%20in%20the%20end/"
+		 */
+		
 		String leech = null;
 		for ( int i = 0; i <detailsPage.length() ; i++){
 			if  (detailsPage.charAt(i) == 'l' && detailsPage.charAt(i+1) == 'e' && detailsPage.charAt(i+2) == 'e' && detailsPage.charAt(i+3) == 'c' && detailsPage.charAt(i+4) == 'h' && detailsPage.charAt(i+5) == 'e' && detailsPage.charAt(i+6) == 'r' && detailsPage.charAt(i+7) == 's' && detailsPage.charAt(i+8) == '"'){
@@ -126,7 +135,7 @@ public class KATGrep {
 	
 	public String grepMagnetLink(String detailsPage){
 		/*
-		 * Given a link this method will find the download link and return it.
+		 *  Given a detailsPage this method will return the magnetLink associated with a torrent
 		 * example @param: "https://kickass.to/usearch/linkinpark%20in%20the%20end/"
 		 */
 		String torrentDownloadLink = null;
@@ -152,13 +161,4 @@ public class KATGrep {
 			return null;
 		}
 	}
-	
-
-	
-	
-	
-	/*
-	 * Conversion methods are here to make life easier. Otherwise you're going to be parsing ArrayLists. Use them!
-	 */
-	
 }

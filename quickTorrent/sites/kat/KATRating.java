@@ -3,8 +3,6 @@ package sites.kat;
 import connect.GetGzippedHTTP;
 import java.util.ArrayList;
 
-
-
 public class KATRating extends KATBuildCache {
 	GetGzippedHTTP conn = new GetGzippedHTTP();
 	/*
@@ -23,7 +21,7 @@ public class KATRating extends KATBuildCache {
 		 */
 		String currentSearch = createParsedURI(query, mediaType); //returns the parsed URI query
 		String searchResultHTML = conn.getWebPageGzipHTTP(currentSearch); //pulls down the html from the URI given
-		torrentPages = super.grepDetailsPage(searchResultHTML); //finds each torrent page link
+		torrentPages = super.grepDetailsURI(searchResultHTML); //finds each torrent page link
 		qc = qualityCheck;
 	}
 	

@@ -18,7 +18,7 @@ public class PirateTest {
 		sites.pirate.PirateRating mySearch = new sites.pirate.PirateRating(sTitle, mediaType, qualityCheck);
 		mySearch.convertToArrays(mySearch.generateQueryResults());
 		String bestLink = mySearch.getBestLink(mySearch.seedArray, mySearch.leechArray, mediaType);
-		System.out.println("\nResults: " + mySearch.GetDataCache());
+		System.out.println("\nResults: " + mySearch.getDataCache());
 		System.out.println("\nBest Link: " + bestLink);
 		System.out.println("\nDownload Link: "+ mySearch.grepMagnetLink(bestLink));
 	}

@@ -3,7 +3,6 @@ package sites.pirate;
 import java.util.ArrayList;
 import connect.GetHTTP;
 
-
 public class PirateRating extends PirateBuildCache {
 	GetHTTP conn = new GetHTTP();
 	/*
@@ -13,7 +12,6 @@ public class PirateRating extends PirateBuildCache {
 	public int[] seedArray;
 	public int[] leechArray;
 	public String[] linkArray;
-	
 	private String[] torrentPages;
 	private boolean qc = true;
 	
@@ -23,7 +21,7 @@ public class PirateRating extends PirateBuildCache {
 		 */
 		String currentSearch = createParsedURI(query, mediaType); //returns the parsed URI query
 		String searchResultHTML = conn.getWebPageHTTP(currentSearch); //pulls down the html from the URI given
-		torrentPages = super.grepDetailsPage(searchResultHTML); //finds each torrent page link
+		torrentPages = super.grepDetailsURI(searchResultHTML); //finds each torrent page link
 		qc = qualityCheck;
 	}
 	
@@ -34,8 +32,8 @@ public class PirateRating extends PirateBuildCache {
 		 */
 		boolean qualityCheck = this.qc;
 		super.buildDataCache(this.torrentPages);
-		if (qualityCheck) return super.qualityFilter(super.GetDataCache()); //run it through a quality check (takes a bit longer)
-		else return super.GetDataCache(); //skip quality check
+		if (qualityCheck) return super.qualityFilter(super.getDataCache()); //run it through a quality check (takes a bit longer)
+		else return super.getDataCache(); //skip quality check
 	}
 	
 	public void convertToArrays(ArrayList <String> queryResults){

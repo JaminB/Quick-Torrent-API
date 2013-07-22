@@ -3,9 +3,9 @@ import sites.kat.KATGrep;
 public class KATSimpleSearch extends sites.kat.KATRating {
 
 	KATGrep magnetLink = new KATGrep();
-/*
- * Takes a search term and a boolean (true == run qualityFilter)
- */
+	/*
+	 * Takes a search term and a boolean (true == run qualityFilter)
+	 */
 	String mediaType;
 	public KATSimpleSearch(String query, String mediaType, boolean qualityCheck) {
 		/*
@@ -15,7 +15,6 @@ public class KATSimpleSearch extends sites.kat.KATRating {
 		
 		super(query, mediaType, qualityCheck);
 		this.mediaType = mediaType;
-		
 	}	
 	
 	public String findBestDownload(){

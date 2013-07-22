@@ -1,8 +1,7 @@
 package sites.kat;
 
-import connect.GetGzippedHTTP;
 import globals.Variables;
-
+import connect.GetGzippedHTTP;
 import java.util.ArrayList;
 
 public class KATBuildCache extends KATGrep {
@@ -11,21 +10,20 @@ public class KATBuildCache extends KATGrep {
 	
 	ArrayList<String> dataCache = new ArrayList<String>(); //stores the data detailsPage data (seeders, leechers, size, links)
 	
-	public ArrayList<String> buildDataCache(String[] detailsPage){
+	public ArrayList<String> buildDataCache(String[] detailsURIS){
 		/*
 		 *  Given a list of KAT torrent address returns the seeds, leeches and links in an ArrayList
-		 *  example @param: GrepDetailsPage("https://kickass.to/usearch/linkinpark%20in%20the%20end/")
+		 *  example @param: GrepdetailsURI("https://kickass.to/usearch/linkinpark%20in%20the%20end/")
 		 */
 		dataCache = new ArrayList<String>();
 		int pageNumber = 0;
-		while (detailsPage[pageNumber] != null){
-			String URI = detailsPage[pageNumber]; //store the URI in a local variable for convenience
+		while (detailsURIS[pageNumber] != null){
+			String URI = detailsURIS[pageNumber]; //store the URI in a local variable for convenience
 			String pageHTML = conn.getWebPageGzipHTTP(URI); //pull down the html of the page
-			
 			dataCache.add(grepSize(pageHTML));
 			dataCache.add(grepSeeds(pageHTML));
 			dataCache.add(grepLeeches(pageHTML));
-			dataCache.add(detailsPage[pageNumber]); // add the page number to the first location of our arrayList
+			dataCache.add(detailsURIS[pageNumber]); // add the page number to the first location of our arrayList
 			pageNumber++;
 		}
 		System.out.print("#");
@@ -36,7 +34,7 @@ public class KATBuildCache extends KATGrep {
 	public ArrayList <String> qualityFilter(ArrayList <String> dataCache){
 		/*
 		 * Quality Check Based on positive/negative rating takes the original cache and filters out bad results
-		 * example @param: GetDataCache() || BuildDataCache("https://kickass.to/usearch/linkinpark%20in%20the%20end/")
+		 * example @param: getDataCache() || BuildDataCache("https://kickass.to/usearch/linkinpark%20in%20the%20end/")
 		 */
 		ArrayList<String> qualityList = dataCache; //use the original dataCache array list
 		int pageNumber = 0;
@@ -120,6 +118,12 @@ public class KATBuildCache extends KATGrep {
 				return null;
 			}
 		}
+		
+		//********************************************Conversion METHODS**********************************************************\\
+		
+			/*
+			 * Conversion methods are here to make life easier. Otherwise you're going to be parsing ArrayLists. Use them!
+			 */
 		public float[] sizeToFloat(ArrayList <String> queryResults){
 			/*
 			 * Conversion method used to convert <String> Size value to integer
@@ -135,6 +139,8 @@ public class KATBuildCache extends KATGrep {
 				return null;
 			}
 		}
+		
+	
 		
 		public int[] seedToInt(ArrayList <String> queryResults){
 			/*

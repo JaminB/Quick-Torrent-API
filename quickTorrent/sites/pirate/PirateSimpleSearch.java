@@ -21,6 +21,7 @@ public class PirateSimpleSearch extends sites.pirate.PirateRating {
 		 */
 		super.convertToArrays(super.generateQueryResults());
 		String bestLink = super.getBestLink(super.seedArray, super.leechArray, this.mediaType);
-		return super.grepMagnetLink(bestLink);
+		String bestLinkHTML = conn.getWebPageHTTP(bestLink);
+		return super.grepMagnetLink(bestLinkHTML);
 	}
 }
