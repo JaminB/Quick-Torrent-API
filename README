@@ -121,9 +121,9 @@ Test Classes:
 -------------
 Any class ending in test should run out of the box. Use these to better understand how the API is put together.
 	
----------------------------------------------------------------------------------------------------
-                                     The Connect Package
----------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+                              The Connect Package
+-------------------------------------------------------------------------------
 The connect package has one job. To retrieve information from web-sites. More specifically it pulls down HTML so that it can be parsed by the methods up above.
 ---------------------------
 GetHTTP and GetGzippedHTTP:
@@ -132,20 +132,20 @@ Given a URI this method will grab the HTML from that page using HTTP protocol
 	i.e getWebPageHTTP("http://www.google.com") will return the HTML from that page
 	GetGzippedHTTP works the exact same way but can decode gzipped content (i.e kickass.to pages)
 
----------------------------------------------------------------------------------------------------
-                                    The Converters Package
----------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+                             The Converters Package
+-------------------------------------------------------------------------------
 Currently this package only has one purpose: to convert magnetLinks to torrentFiles (URIs)
 Given a magnetLink it will search through the isohunt database or torcache database and return the torrentLink URI if it finds one.
 
----------------------------------------------------------------------------------------------------
-                                     The FileIO package
----------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+                              The FileIO package
+-------------------------------------------------------------------------------
 This package's main purpose is to download .torrent files to a destination of choice.
 
----------------------------------------------------------------------------------------------------
-                                    The Globals Package
----------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+                              The Globals Package
+-------------------------------------------------------------------------------
 ----------
 constants:
 ----------
