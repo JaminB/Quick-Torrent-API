@@ -1,4 +1,5 @@
 package sites.kat;
+import converters.generic.DataConverters;
 import globals.*;
 
 public class KATGrep {
@@ -87,8 +88,16 @@ public class KATGrep {
 				int sizeEnd = i + 7;
 				while (detailsPage.charAt(sizeEnd) != ' ')
 					sizeEnd++;
-				size = (detailsPage.substring(sizeStart, sizeEnd));
+				if (detailsPage.charAt(sizeEnd + 7) == 'G'){
+					size = Float.toString(DataConverters.GBToMB(Float.parseFloat(((detailsPage.substring(sizeStart, sizeEnd)))))); //Parses out the the correct part of the string and converts it from GB to MB
+			
+				}
+				
+				else{
+					size = (detailsPage.substring(sizeStart, sizeEnd));
+				}
 			}
+			
 		}
 		Variables.sizeCount = size;
 		return size;

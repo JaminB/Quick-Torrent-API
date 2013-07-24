@@ -29,7 +29,7 @@ public class GetHTTP {
 				renderedPage += inputLine;
 			read.close();
 			Variables.currentWebPage = renderedPage; //store the current webpage in our globals library
-			System.out.println(Variables.currentURI);
+			//System.out.println(Variables.currentURI);
 		return Variables.currentWebPage;
 		}catch (Exception e){
 			return null;

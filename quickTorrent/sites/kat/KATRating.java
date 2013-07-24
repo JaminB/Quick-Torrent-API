@@ -54,8 +54,8 @@ public class KATRating extends KATBuildCache {
 		int sizeMinimum;
 		int sizeMaximum;
 		if (mediaType.toLowerCase().equals("movie") || mediaType.toLowerCase().equals("movies")){
-			sizeMinimum = 0;
-			sizeMaximum = 2;
+			sizeMinimum = 300;
+			sizeMaximum = 1500;
 		}
 		else{
 			sizeMinimum = 3;

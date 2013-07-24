@@ -1,4 +1,5 @@
 package sites.pirate;
+import converters.generic.DataConverters;
 import globals.*;
 
 public class PirateGrep{
@@ -69,7 +70,16 @@ public class PirateGrep{
 					int j = i + 16;
 					while (detailsPage.charAt(j) != '&')
 						j++;
-					size = detailsPage.substring(i+16, j);
+					int sizeStart = i + 16;
+					int sizeEnd = j;
+					if (detailsPage.charAt(sizeEnd + 6) == 'G'){
+						size = Float.toString(DataConverters.GBToMB(Float.parseFloat(((detailsPage.substring(sizeStart, sizeEnd)))))); //Parses out the the correct part of the string and converts it from GB to MB
+					}
+					
+					else{
+						size = (detailsPage.substring(sizeStart, sizeEnd));
+					}
+					
 				}
 		}
 		Variables.sizeCount = size;
