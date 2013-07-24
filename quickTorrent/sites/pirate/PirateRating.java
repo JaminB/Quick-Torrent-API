@@ -1,7 +1,9 @@
 package sites.pirate;
 
-import java.util.ArrayList;
+import connect.GetGzippedHTTP;
 import connect.GetHTTP;
+import globals.Variables;
+import java.util.ArrayList;
 
 public class PirateRating extends PirateBuildCache {
 	GetHTTP conn = new GetHTTP();
@@ -51,26 +53,31 @@ public class PirateRating extends PirateBuildCache {
 		/*
 		 * Determines the best link to pull the torrent from.
 		 */
-		 int sizeMinimum;
-		 int sizeMaximum;
-		 if (mediaType.toLowerCase().equals("movie") || mediaType.toLowerCase().equals("movies")){
-			 sizeMinimum = 0;
-			 sizeMaximum = 2;
-		 }
-		 else{
-		 sizeMinimum = 3;
-		 sizeMaximum = 11;
-		 }
-		 System.out.println("\nSize Minimum: " + sizeMinimum);     
+		float sizeMinimum;
+		float sizeMaximum;
+		if (mediaType.toLowerCase().equals("movie") || mediaType.toLowerCase().equals("movies")){
+			sizeMinimum = Variables.movieSizeMin;
+			sizeMaximum = Variables.movieSizeMax;
+		}
+		else{
+			sizeMinimum = Variables.musicSizeMin;
+			sizeMaximum = Variables.musicSizeMax;
+		}
+			
 		try{
 		String bestChoice = null;
 		int greatestDifference = 0;
 			for (int i = 0; i < seedArray.length; i++){
-				if (seedArray[i] - leechArray[i] > greatestDifference)
 					if (sizeArray[i] > sizeMinimum && sizeArray[i] < sizeMaximum){
-						greatestDifference = seedArray[i] -leechArray[i];
-						bestChoice = linkArray[i];
+						if (seedArray[i] - leechArray[i] > greatestDifference){
+							greatestDifference = seedArray[i] - leechArray[i];
+							System.out.println("Greatest Difference" + greatestDifference);
+							bestChoice = linkArray[i];
 					}
+					
+				}
+					
+				System.out.println(greatestDifference);
 			}
 			return bestChoice;
 		}catch (Exception e){
@@ -78,3 +85,5 @@ public class PirateRating extends PirateBuildCache {
 		}
 	}
 }
+	
+

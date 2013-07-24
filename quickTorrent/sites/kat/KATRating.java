@@ -1,6 +1,7 @@
 package sites.kat;
 
 import connect.GetGzippedHTTP;
+import globals.Variables;
 import java.util.ArrayList;
 
 public class KATRating extends KATBuildCache {
@@ -51,27 +52,31 @@ public class KATRating extends KATBuildCache {
 		/*
 		 * Determines the best link to pull the torrent from.
 		 */
-		int sizeMinimum;
-		int sizeMaximum;
+		float sizeMinimum;
+		float sizeMaximum;
 		if (mediaType.toLowerCase().equals("movie") || mediaType.toLowerCase().equals("movies")){
-			sizeMinimum = 300;
-			sizeMaximum = 1500;
+			sizeMinimum = Variables.movieSizeMin;
+			sizeMaximum = Variables.movieSizeMax;
 		}
 		else{
-			sizeMinimum = 3;
-			sizeMaximum = 11;
+			sizeMinimum = Variables.musicSizeMin;
+			sizeMaximum = Variables.musicSizeMax;
 		}
-		System.out.println("\nSize Minimum: " + sizeMinimum);
 			
 		try{
 		String bestChoice = null;
 		int greatestDifference = 0;
 			for (int i = 0; i < seedArray.length; i++){
-				if (seedArray[i] - leechArray[i] > greatestDifference)
 					if (sizeArray[i] > sizeMinimum && sizeArray[i] < sizeMaximum){
-						greatestDifference = seedArray[i] -leechArray[i];
-						bestChoice = linkArray[i];
+						if (seedArray[i] - leechArray[i] > greatestDifference){
+							greatestDifference = seedArray[i] - leechArray[i];
+							System.out.println("Greatest Difference" + greatestDifference);
+							bestChoice = linkArray[i];
 					}
+					
+				}
+					
+				System.out.println(greatestDifference);
 			}
 			return bestChoice;
 		}catch (Exception e){

@@ -1,16 +1,19 @@
 package sites.pirate;
-
-
+import sites.kat.KATGrep;
+import connect.GetHTTP;
 public class PirateSimpleSearch extends sites.pirate.PirateRating {
+
+	KATGrep magnetLink = new KATGrep();
 	/*
-	* Takes a search term and a boolean (true == run qualityFilter)
-	*/
+	 * Takes a search term and a boolean (true == run qualityFilter)
+	 */
 	String mediaType;
 	public PirateSimpleSearch(String query, String mediaType, boolean qualityCheck) {
 		/*
 		 * Set up your search.
 		 * example @param "Stairway to heaven", "music", true
 		 */
+		
 		super(query, mediaType, qualityCheck);
 		this.mediaType = mediaType;
 	}	
@@ -22,6 +25,6 @@ public class PirateSimpleSearch extends sites.pirate.PirateRating {
 		super.convertToArrays(super.generateQueryResults());
 		String bestLink = super.getBestLink(super.seedArray, super.leechArray, this.mediaType);
 		String bestLinkHTML = conn.getWebPageHTTP(bestLink);
-		return super.grepMagnetLink(bestLinkHTML);
+		return magnetLink.grepMagnetLink(bestLinkHTML);
 	}
 }

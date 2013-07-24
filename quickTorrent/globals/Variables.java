@@ -26,6 +26,12 @@ public class Variables {
 	public static String seedCount; //Number of seeds of the most recently searched torrent as a String
 	public static String leechCount; //Number of leeches for the most recently searched torrent a String
 	public static String sizeCount; //Size of the most recently searched torrent as a float
+	
+	//Movie Size
+	public static float musicSizeMin = 3; //The minimum size (in megabytes) of the music torrent that can be downloaded
+	public static float musicSizeMax = 10; //The maximum size (in megabytes) of the music torrent that can be downloaded
+	public static float movieSizeMin = 2000; //The minimum size (in megabytes) of the movie torrent that can be downloaded
+	public static float movieSizeMax = 10000; //The maximum size (in megabytes) of the movie torrent that can be downloaded
 
 
 	
