@@ -1,6 +1,5 @@
 package sites.pirate;
 import sites.kat.KATGrep;
-import connect.GetHTTP;
 public class PirateSimpleSearch extends sites.pirate.PirateRating {
 
 	KATGrep magnetLink = new KATGrep();

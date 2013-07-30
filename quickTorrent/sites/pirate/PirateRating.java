@@ -1,6 +1,5 @@
 package sites.pirate;
 
-import connect.GetGzippedHTTP;
 import connect.GetHTTP;
 import globals.Variables;
 import java.util.ArrayList;
@@ -15,7 +14,8 @@ public class PirateRating extends PirateBuildCache {
 	public int[] leechArray;
 	public String[] linkArray;
 	private String[] torrentPages;
-	private boolean qc = true;
+	private boolean qualityCheck = true;
+	private String mediaType = "music";
 	
 	public PirateRating(String query, String mediaType, boolean qualityCheck){
 		/*
@@ -24,15 +24,29 @@ public class PirateRating extends PirateBuildCache {
 		String currentSearch = createParsedURI(query, mediaType); //returns the parsed URI query
 		String searchResultHTML = conn.getWebPageHTTP(currentSearch); //pulls down the html from the URI given
 		torrentPages = super.grepDetailsURI(searchResultHTML); //finds each torrent page link
-		qc = qualityCheck;
+		this.qualityCheck = qualityCheck;
+		this.mediaType = mediaType;
 	}
 	
+	public ArrayList <String> generateQueryResults(String query, String mediaType, boolean qualityCheck){ 
+		/*
+		 * Uses methods from PageGrep and PageFunc to generate a list of candidate torrents
+		 * This method must be called after the constructor
+		 */
+		String currentSearch = createParsedURI(query, mediaType); //returns the parsed URI query
+		String searchResultHTML = conn.getWebPageHTTP(currentSearch); //pulls down the html from the URI given
+		torrentPages = super.grepDetailsURI(searchResultHTML);
+		super.buildDataCache(this.torrentPages);
+		if (qualityCheck) return super.qualityFilter(super.getDataCache()); //run it through a quality check (takes a bit longer)
+		else return super.getDataCache(); //skip quality check
+	}
+
 	public ArrayList <String> generateQueryResults(){ 
 		/*
 		 * Uses methods from PageGrep and PageFunc to generate a list of candidate torrents
 		 * This method must be called after the constructor
 		 */
-		boolean qualityCheck = this.qc;
+		boolean qualityCheck = this.qualityCheck;
 		super.buildDataCache(this.torrentPages);
 		if (qualityCheck) return super.qualityFilter(super.getDataCache()); //run it through a quality check (takes a bit longer)
 		else return super.getDataCache(); //skip quality check
@@ -71,13 +85,44 @@ public class PirateRating extends PirateBuildCache {
 					if (sizeArray[i] > sizeMinimum && sizeArray[i] < sizeMaximum){
 						if (seedArray[i] - leechArray[i] > greatestDifference){
 							greatestDifference = seedArray[i] - leechArray[i];
-							System.out.println("Greatest Difference" + greatestDifference);
 							bestChoice = linkArray[i];
 					}
 					
 				}
+			}
+			return bestChoice;
+		}catch (Exception e){
+			return null;
+		}
+	}
+	
+	//Overloaded method assumes you passed the mediaType in the constructor
+	public String getBestLink(int[] seedArray, int[] leechArray){
+		/*
+		 * Determines the best link to pull the torrent from.
+		 */
+		float sizeMinimum;
+		float sizeMaximum;
+		if (this.mediaType.toLowerCase().equals("movie") || this.mediaType.toLowerCase().equals("movies")){
+			sizeMinimum = Variables.movieSizeMin;
+			sizeMaximum = Variables.movieSizeMax;
+		}
+		else{
+			sizeMinimum = Variables.musicSizeMin;
+			sizeMaximum = Variables.musicSizeMax;
+		}
+			
+		try{
+		String bestChoice = null;
+		int greatestDifference = 0;
+			for (int i = 0; i < seedArray.length; i++){
+					if (sizeArray[i] > sizeMinimum && sizeArray[i] < sizeMaximum){
+						if (seedArray[i] - leechArray[i] > greatestDifference){
+							greatestDifference = seedArray[i] - leechArray[i];
+							bestChoice = linkArray[i];
+					}
 					
-				System.out.println(greatestDifference);
+				}
 			}
 			return bestChoice;
 		}catch (Exception e){
@@ -85,5 +130,6 @@ public class PirateRating extends PirateBuildCache {
 		}
 	}
 }
+
 	
 
