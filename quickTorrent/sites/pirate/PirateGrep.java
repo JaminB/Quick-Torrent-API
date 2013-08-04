@@ -50,9 +50,10 @@ public class PirateGrep{
 					}
 					int linkStart = i +7;
 					int linkEnd = j;
-					detailsPage[result] = Constants.PIRATE_BASE+p.substring(linkStart, linkEnd);
 					Variables.lastSearch.add(detailsPage[result]); //adds the list of traversed links to the global last search list
-					result++;
+					if((detailsPage[result].contains("Ä") || detailsPage[result].contains("™") || detailsPage[result].contains("‡"))) //remove some unicode characters that break the search
+						result++;
+					detailsPage[result] = Constants.PIRATE_BASE+p.substring(linkStart, linkEnd);
 			}
 		}
 		System.out.println("Found " + result);

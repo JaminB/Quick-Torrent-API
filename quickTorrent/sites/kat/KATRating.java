@@ -70,13 +70,10 @@ public class KATRating extends KATBuildCache {
 					if (sizeArray[i] > sizeMinimum && sizeArray[i] < sizeMaximum){
 						if (seedArray[i] - leechArray[i] > greatestDifference){
 							greatestDifference = seedArray[i] - leechArray[i];
-							System.out.println("Greatest Difference" + greatestDifference);
 							bestChoice = linkArray[i];
 					}
 					
 				}
-					
-				System.out.println(greatestDifference);
 			}
 			return bestChoice;
 		}catch (Exception e){
