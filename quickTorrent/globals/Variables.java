@@ -30,6 +30,8 @@ public class Variables {
 	//Movie Size
 	public static float musicSizeMin = 3; //The minimum size (in megabytes) of the music torrent that can be downloaded
 	public static float musicSizeMax = 10; //The maximum size (in megabytes) of the music torrent that can be downloaded
+	public static float albumSizeMin = 30;  //The minimum size (in megabytes) of the album torrent that can be downloaded
+	public static float albumSizeMax = 300; //The minimum size (in megabytes) of the album torrent that can be downloaded
 	public static float movieSizeMin = 2000; //The minimum size (in megabytes) of the movie torrent that can be downloaded
 	public static float movieSizeMax = 10000; //The maximum size (in megabytes) of the movie torrent that can be downloaded
 

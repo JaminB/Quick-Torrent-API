@@ -58,6 +58,11 @@ public class KATRating extends KATBuildCache {
 			sizeMinimum = Variables.movieSizeMin;
 			sizeMaximum = Variables.movieSizeMax;
 		}
+		
+		else if (mediaType.toLowerCase().equals("album") || mediaType.toLowerCase().equals("albums")){
+			sizeMinimum = Variables.albumSizeMin;
+			sizeMaximum = Variables.albumSizeMax;
+		}
 		else{
 			sizeMinimum = Variables.musicSizeMin;
 			sizeMaximum = Variables.musicSizeMax;

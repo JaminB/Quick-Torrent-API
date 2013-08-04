@@ -63,7 +63,6 @@ public class KATGrep {
 						while (p.charAt(linkEnd) != '"')
 							linkEnd++;
 							detailsPage[result] = (Constants.KAT_BASE+p.substring(linkStart, linkEnd));
-							System.out.println(detailsPage[result]);
 							if((detailsPage[result].contains("Ä") || detailsPage[result].contains("™") || detailsPage[result].contains("‡"))) //remove some unicode characters that break the search
 								result--;
 							Variables.lastSearch.add(detailsPage[result]);
