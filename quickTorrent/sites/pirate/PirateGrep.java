@@ -40,19 +40,22 @@ public class PirateGrep{
 		 */
 		String p = searchPage;
 		int result = 0;
-		String[] detailsPage = new String[31]; //holds the top 30 results
+		String[] detailsPage = new String[62]; //holds the top 30 results with error buffer
 		for (int i = 0; i<p.length(); i++){
 			if(p.charAt(i) == 'h' && p.charAt(i+1) == 'r' && p.charAt(i+2) == 'e' && p.charAt(i+3) == 'f'  && p.charAt(i+7) == 't' && p.charAt(i+8) == 'o' 
 					&& p.charAt(i+9) == 'r' && p.charAt(i+10) == 'r' && p.charAt(i+11) == 'e' && p.charAt(i+12) == 'n' && p.charAt(i+13) == 't' && p.charAt(i+14) == '/'){
 					int j = i+15; //j is a substring iterator
 					while ((int) p.charAt(j) != 47){
 						j++;
+						
 					}
 					int linkStart = i +7;
 					int linkEnd = j;
+					detailsPage[result] = (Constants.PIRATE_BASE+p.substring(linkStart, linkEnd));
 					Variables.lastSearch.add(detailsPage[result]); //adds the list of traversed links to the global last search list
 					if((detailsPage[result].contains("Ä") || detailsPage[result].contains("™") || detailsPage[result].contains("‡"))) //remove some unicode characters that break the search
-						result++;
+						result--;
+					result++;
 					detailsPage[result] = Constants.PIRATE_BASE+p.substring(linkStart, linkEnd);
 			}
 		}

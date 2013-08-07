@@ -45,7 +45,7 @@ public class KATGrep {
 			 */
 			String p = searchPage;
 			int result = 0;
-			String[] detailsPage = new String[26]; //holds the top 30 results
+			String[] detailsPage = new String[52]; //holds the top 25 results with error buffer
 			try {
 				for (int i = 0; i<p.length(); i++){
 					if(p.charAt(i) == 't'
