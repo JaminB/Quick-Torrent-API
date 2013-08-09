@@ -51,12 +51,16 @@ public class PirateGrep{
 					}
 					int linkStart = i +7;
 					int linkEnd = j;
-					detailsPage[result] = (Constants.PIRATE_BASE+p.substring(linkStart, linkEnd));
-					Variables.lastSearch.add(detailsPage[result]); //adds the list of traversed links to the global last search list
-					if((detailsPage[result].contains("�") || detailsPage[result].contains("�") || detailsPage[result].contains("�"))) //remove some unicode characters that break the search
-						result--;
-					result++;
 					detailsPage[result] = Constants.PIRATE_BASE+p.substring(linkStart, linkEnd);
+					if((detailsPage[result].contains("Ä") || detailsPage[result].contains("™") 
+							|| detailsPage[result].contains("‡") || detailsPage[result].contains("ё") 
+							|| detailsPage[result].contains("й")|| detailsPage[result].contains("ы")
+							|| detailsPage[result].contains("ы") || detailsPage[result].contains("п")
+							|| detailsPage[result].contains("ь") || detailsPage[result].contains("т"))) //remove some unicode characters that break the search
+						result--;
+					System.out.println(detailsPage[result]);
+					Variables.lastSearch.add(detailsPage[result]); //adds the list of traversed links to the global last search list
+					result++;
 			}
 		}
 		System.out.println("Found " + result);

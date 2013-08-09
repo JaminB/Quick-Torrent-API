@@ -63,11 +63,14 @@ public class KATGrep {
 						while (p.charAt(linkEnd) != '"')
 							linkEnd++;
 							detailsPage[result] = (Constants.KAT_BASE+p.substring(linkStart, linkEnd));
-							if((detailsPage[result].contains("�") || detailsPage[result].contains("�") || detailsPage[result].contains("�"))) //remove some unicode characters that break the search
+							if((detailsPage[result].contains("Ä") || detailsPage[result].contains("™") 
+									|| detailsPage[result].contains("‡") || detailsPage[result].contains("ё") 
+									|| detailsPage[result].contains("й")|| detailsPage[result].contains("ы")
+									|| detailsPage[result].contains("ы") || detailsPage[result].contains("п")
+									|| detailsPage[result].contains("ь") || detailsPage[result].contains("т"))) //remove some unicode characters that break the search
 								result--;
-							Variables.lastSearch.add(detailsPage[result]);
+						Variables.lastSearch.add(detailsPage[result]);
 						result++;
-						
 					}
 				}
 				System.out.println("Found: " + result);
