@@ -43,6 +43,18 @@ public class BuildGenericCache {
 			}
 		}
 		else if (cacheType.toLowerCase().equals("kat")){
+			int pageNumber = 0;
+			while(detailsURIs[pageNumber] != null){
+				URI = detailsURIs[pageNumber]; //store the URI in a local variable for convenience
+				pageHTML = gzippedHTTPConnect.getWebPageGzipHTTP(URI); //pull down the html of the page
+				links.add(detailsURIs[pageNumber]);
+				detailsPage.add(pageHTML);
+				size.add(katSearch.grepSize(pageHTML));
+				seeds.add(katSearch.grepSeeds(pageHTML));
+				leeches.add(katSearch.grepLeeches(pageHTML));
+				pageNumber++;
+			}
+			
 		}
 		else
 			return null;	
