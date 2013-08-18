@@ -1,4 +1,4 @@
-package converters;
+package tests;
 
 import converters.torcache.MagnetToTorrent;
 import sites.kat.KATSimpleSearch;

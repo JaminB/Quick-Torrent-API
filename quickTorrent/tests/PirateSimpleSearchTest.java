@@ -1,5 +1,6 @@
-package sites.pirate;
+package tests;
 
+import sites.pirate.PirateSimpleSearch;
 import globals.Variables;
 
 public class PirateSimpleSearchTest {

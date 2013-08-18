@@ -170,7 +170,7 @@ public class KATGrep {
 					torrentDownloadLink = (detailsPage.substring(i,j));
 				}
 			}
-			return torrentDownloadLink;
+		return torrentDownloadLink;
 		}catch (Exception e){
 			return null;
 		}

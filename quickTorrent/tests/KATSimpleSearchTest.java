@@ -1,5 +1,6 @@
-package sites.kat;
+package tests;
 
+import sites.kat.KATSimpleSearch;
 import globals.Variables;
 
 public class KATSimpleSearchTest {

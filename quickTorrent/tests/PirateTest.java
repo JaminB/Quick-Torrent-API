@@ -1,6 +1,6 @@
-package sites.kat;
+package tests;
 import java.util.Scanner;
-public class KATTest {
+public class PirateTest {
 
 	public static void main(String[] args) {
 		@SuppressWarnings("resource")
@@ -15,12 +15,11 @@ public class KATTest {
 			System.out.println("> Filter ON.");
 			qualityCheck = true;
 		}
-		sites.kat.KATRating mySearch = new sites.kat.KATRating(sTitle, mediaType, qualityCheck);
+		sites.pirate.PirateRating mySearch = new sites.pirate.PirateRating(sTitle, mediaType, qualityCheck);
 		mySearch.convertToArrays(mySearch.generateQueryResults());
 		String bestLink = mySearch.getBestLink(mySearch.seedArray, mySearch.leechArray, mediaType);
 		System.out.println("\nResults: " + mySearch.getDataCache());
 		System.out.println("\nBest Link: " + bestLink);
 		System.out.println("\nDownload Link: "+ mySearch.grepMagnetLink(bestLink));
 	}
-	
 }

@@ -1,6 +1,8 @@
-package connect;
+package tests;
 
 import java.io.IOException;
+
+import connect.DownloadFile;
 
 
 public class DownloadTest {
