@@ -4,14 +4,14 @@ import java.io.IOException;
 import sites.pirate.*;
 import sites.kat.*;
 import connect.*;
-import cache.BuildGenericCache;
+import cache.*;
 
 public class BuildGenericCacheTest {
 	
 	public static void main(String args[]) throws IOException{
 		GetHTTP getHTML = new GetHTTP();
 		GetGzippedHTTP getGzippedHTML = new GetGzippedHTTP();
-		String searchTerm = "linkin park";
+		String searchTerm = "linkin park in the end";
 		/*
 		PirateGrep pirateSearchPages = new PirateGrep();
 		String pirateSearchURI = pirateSearchPages.createParsedURI(searchTerm, "music");
@@ -23,8 +23,10 @@ public class BuildGenericCacheTest {
 		KATGrep KATSearchPages = new KATGrep();
 		String KATSearchURI = KATSearchPages.createParsedURI(searchTerm, "music");
 		String[] KATDetailsURIs = KATSearchPages.grepDetailsURI(getGzippedHTML.getWebPageGzipHTTP(KATSearchURI));
-		BuildGenericCache KATCache = new BuildGenericCache();
-		System.out.println(KATCache.buildCache(KATDetailsURIs, "KAT"));
+		BuildCache KATCache = new BuildCache();
+		//System.out.println(KATCache.buildCache(KATDetailsURIs, "KAT"));
+		AccessCache magnetLinks = new AccessCache();
+		System.out.println(magnetLinks.getMagnetLinks(KATCache.buildCache(KATDetailsURIs, "KAT")));
 		 
 		
 		
