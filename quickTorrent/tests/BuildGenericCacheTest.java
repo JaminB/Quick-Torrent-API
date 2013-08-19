@@ -1,4 +1,6 @@
 package tests;
+import java.io.IOException;
+
 import sites.pirate.*;
 import sites.kat.*;
 import connect.*;
@@ -6,12 +8,12 @@ import cache.BuildGenericCache;
 
 public class BuildGenericCacheTest {
 	
-	public static void main(String args[]){
+	public static void main(String args[]) throws IOException{
 		GetHTTP getHTML = new GetHTTP();
 		GetGzippedHTTP getGzippedHTML = new GetGzippedHTTP();
 		String searchTerm = "linkin park";
-		
-		/*PirateGrep pirateSearchPages = new PirateGrep();
+		/*
+		PirateGrep pirateSearchPages = new PirateGrep();
 		String pirateSearchURI = pirateSearchPages.createParsedURI(searchTerm, "music");
 		String[] pirateDetailsURIs = pirateSearchPages.grepDetailsURI(getHTML.getWebPageHTTP(pirateSearchURI));
 		BuildGenericCache pirateCache = new BuildGenericCache();
@@ -23,7 +25,7 @@ public class BuildGenericCacheTest {
 		String[] KATDetailsURIs = KATSearchPages.grepDetailsURI(getGzippedHTML.getWebPageGzipHTTP(KATSearchURI));
 		BuildGenericCache KATCache = new BuildGenericCache();
 		System.out.println(KATCache.buildCache(KATDetailsURIs, "KAT"));
-	
+		 
 		
 		
 		
