@@ -44,12 +44,8 @@ public class BuildCache {
 		for (int i = 0; i < lines.size(); i++)
 			if(detailsPage.toLowerCase().contains(lines.get(i)))
 				return "true";
-		return "false";
-		
-	
-		
+		return "false";	
 	}
-	
 	 
 	public ArrayList<ArrayList<String>> buildCache(String[] detailsURIs, String cacheType) throws IOException{
 		ArrayList<String> links = new ArrayList<String>();
@@ -93,5 +89,4 @@ public class BuildCache {
 			return null;	
 		return fullCache(filter, size, seeds, leeches, links, magnetLinks);
 	}
-	
 }
