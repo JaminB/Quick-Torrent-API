@@ -22,6 +22,7 @@ public class Constants {
 	public static String KAT_SEARCH_MUSIC_SUFFIX = "%20category:mp3/";
 	public static String KAT_SEARCH_MOVIE_SUFFIX = "%20category:movies/";
 	
-	
+	//Tracker Rating Constants
+	public static int BASE_SEED_LOWER_BOUND = 30;
 
 }

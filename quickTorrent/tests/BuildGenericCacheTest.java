@@ -12,22 +12,24 @@ public class BuildGenericCacheTest {
 		GetHTTP getHTML = new GetHTTP();
 		GetGzippedHTTP getGzippedHTML = new GetGzippedHTTP();
 		String searchTerm = "linkin park in the end";
-		/*
+	
 		PirateGrep pirateSearchPages = new PirateGrep();
 		String pirateSearchURI = pirateSearchPages.createParsedURI(searchTerm, "music");
 		String[] pirateDetailsURIs = pirateSearchPages.grepDetailsURI(getHTML.getWebPageHTTP(pirateSearchURI));
-		BuildGenericCache pirateCache = new BuildGenericCache();
-		System.out.println(pirateCache.buildCache(pirateDetailsURIs, "pirate"));
-		*/
+		BuildCache pirateCache = new BuildCache();
+		AccessCache cache = new AccessCache();
+		//System.out.println(pirateCache.buildCache(pirateDetailsURIs, "pirate"));
+		System.out.println(cache.getFilter(pirateCache.buildCache(pirateDetailsURIs, "Pirate")));
 		
+		/*
 		KATGrep KATSearchPages = new KATGrep();
 		String KATSearchURI = KATSearchPages.createParsedURI(searchTerm, "music");
 		String[] KATDetailsURIs = KATSearchPages.grepDetailsURI(getGzippedHTML.getWebPageGzipHTTP(KATSearchURI));
 		BuildCache KATCache = new BuildCache();
 		//System.out.println(KATCache.buildCache(KATDetailsURIs, "KAT"));
-		AccessCache magnetLinks = new AccessCache();
-		System.out.println(magnetLinks.getMagnetLinks(KATCache.buildCache(KATDetailsURIs, "KAT")));
-		 
+		AccessCache cache = new AccessCache();
+		System.out.println(cache.getMagnetLinks(KATCache.buildCache(KATDetailsURIs, "KAT")));
+		 */
 		
 		
 		
