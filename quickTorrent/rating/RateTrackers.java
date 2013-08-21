@@ -11,7 +11,9 @@ public class RateTrackers {
 	int h = 0; //heuristic used to find the best link
 	int g = 100; //goal state
 	double linkDetailLevel = 0;
-	public void setLinkDetailLevel(String searchTerm){
+	double searchQuality = 0;
+	
+	public void setQueryDetailLevel(String searchTerm){
 		int index = searchTerm.indexOf(" ");
 		float count = 0;
 		while (index != -1) {
@@ -41,7 +43,7 @@ public class RateTrackers {
 		return false;
 		
 	}
-	public void setSearchLinkAccuracy(String searchTerm, String detailPage){
+	public void setSearchQuality(String searchTerm){
 		//List<String> searchTerms = new LinkedList<String>(); // create a new list
 		int insignificantWordCount = 0;
 		int significantWordCount = 0;
@@ -69,6 +71,9 @@ public class RateTrackers {
 			significantWordCount++;
 		
 		System.out.println("Insignificant words: " + insignificantWordCount + "" +"\nSignificant words: "+ significantWordCount );
+		searchQuality = insignificantWordCount*2 + significantWordCount*10;
+		System.out.println(searchQuality);
+		
 			
 	}
 
