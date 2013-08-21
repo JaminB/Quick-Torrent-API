@@ -51,11 +51,10 @@ public class WordListDeDuper {
 
 	public static void main(String args[]) throws IOException{
 		WordListDeDuper deDuplicator  = new WordListDeDuper();
-		deDuplicator.wordDeDuper("test1.txt", "test2.txt");
+		deDuplicator.wordDeDuper("1.txt", "2.txt");
 		PrintWriter output = new PrintWriter("uniqueList.txt");
 		System.out.println(list3);
 		for (int i = 0; i < list3.size(); i++){
-			System.out.println(list3.get(i));
 			output.println(list3.get(i));
 		}
 		output.close();
