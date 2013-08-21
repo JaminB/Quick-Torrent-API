@@ -53,7 +53,6 @@ public class WordListDeDuper {
 		WordListDeDuper deDuplicator  = new WordListDeDuper();
 		deDuplicator.wordDeDuper("1.txt", "2.txt");
 		PrintWriter output = new PrintWriter("uniqueList.txt");
-		System.out.println(list3);
 		for (int i = 0; i < list3.size(); i++){
 			output.println(list3.get(i));
 		}
