@@ -1,10 +1,11 @@
 package tests;
 import java.io.IOException;
 
-import sites.pirate.*;
-import sites.kat.*;
-import connect.*;
-import cache.*;
+import sites.pirate.PirateGrep;
+import cache.AccessCache;
+import cache.BuildCache;
+import connect.GetGzippedHTTP;
+import connect.GetHTTP;
 
 public class BuildGenericCacheTest {
 	
@@ -17,9 +18,8 @@ public class BuildGenericCacheTest {
 		String pirateSearchURI = pirateSearchPages.createParsedURI(searchTerm, "music");
 		String[] pirateDetailsURIs = pirateSearchPages.grepDetailsURI(getHTML.getWebPageHTTP(pirateSearchURI));
 		BuildCache pirateCache = new BuildCache();
-		AccessCache cache = new AccessCache();
-		//System.out.println(pirateCache.buildCache(pirateDetailsURIs, "pirate"));
-		System.out.println(cache.getFilter(pirateCache.buildCache(pirateDetailsURIs, "Pirate")));
+		AccessCache cache = pirateCache.buildCache(pirateDetailsURIs, "Pirate");
+		System.out.println(cache.getFilter());
 		
 		/*
 		KATGrep KATSearchPages = new KATGrep();
