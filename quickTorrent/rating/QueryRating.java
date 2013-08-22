@@ -1,29 +1,29 @@
 package rating;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 import cache.*;
 
-public class RateTrackers {
+public class QueryRating {
 	BuildCache buildCache = new BuildCache();
 	AccessCache accessCache = new AccessCache();
 	
 	int h = 0; //heuristic used to find the best link
 	int g = 100; //goal state
-	double linkDetailLevel = 0;
-	double searchQuality = 0;
 	
-	public void setQueryDetailLevel(String searchTerm){
+	public int getQuerySize(String searchTerm){
 		int index = searchTerm.indexOf(" ");
-		float count = 0;
+		int count = 0;
 		while (index != -1) {
 		    count++;
 		    searchTerm = searchTerm.substring(index + 1);
 		    index = searchTerm.indexOf(" ");
 		}
-		linkDetailLevel = ((count + 1)*(count + 1))*1.3; 
-		System.out.println(count + 1);
-		System.out.println(linkDetailLevel);
+		return count + 1;
 	}
 	
 	private boolean insignificantWord(String someWord){
@@ -35,7 +35,7 @@ public class RateTrackers {
 				"about", "above", "across", "after", "against", "around", "at", "before", "behind", "below", "beneath", "beside",
 				"besides", "between", "beyond", "by", "down", "during", "except", "for", "from", "in","inside","into","like","near","of",
 				"off","on","out","outside","over","since","through","throughout","till","to","toward","under","until","up","upon","with",
-				"without"
+				"without", "i", "me", "us","we", "him", "her", "it", "she", "you", "they", "them", "he"
 				};
 		for(int i = 0; i < ignoreList.length; i++)
 			if(someWord.equals(ignoreList[i]))
@@ -43,9 +43,8 @@ public class RateTrackers {
 		return false;
 		
 	}
-	public void setSearchQuality(String searchTerm){
+	public int getQueryImportantWords(String searchTerm){
 		//List<String> searchTerms = new LinkedList<String>(); // create a new list
-		int insignificantWordCount = 0;
 		int significantWordCount = 0;
 		int startIndex = 0;
 		int endIndex = 0;
@@ -53,29 +52,28 @@ public class RateTrackers {
 			endIndex++;
 			if(searchTerm.charAt(i) == ' '){
 				String untestedWord = (searchTerm.substring(startIndex, endIndex).replaceAll("\\s", "").toLowerCase());
-				if(insignificantWord(untestedWord)){
-					insignificantWordCount++;
-				}
-					//searchTerms.add(untestedWord);
-				else
+				if(!insignificantWord(untestedWord))
 					significantWordCount++;
+				
 				startIndex = endIndex;
 			}
 		}
 		String untestedWord = (searchTerm.substring(startIndex, searchTerm.length()).replaceAll("\\s", "").toLowerCase());
-		if(insignificantWord(untestedWord)){
-			insignificantWordCount++;
-		}
-			//searchTerms.add(untestedWord);
-		else
+		if(!insignificantWord(untestedWord))
 			significantWordCount++;
 		
-		System.out.println("Insignificant words: " + insignificantWordCount + "" +"\nSignificant words: "+ significantWordCount );
-		searchQuality = insignificantWordCount*2 + significantWordCount*10;
-		System.out.println(searchQuality);
-		
-			
+		return significantWordCount;
 	}
-
+	
+	public int getCorrectlySpelled(String searchTerm) throws IOException{
+		BufferedReader read = new BufferedReader(new FileReader("DictionaryList.txt"));
+		List<String> dictionary = new LinkedList<String>();
+		String line = read.readLine(); 
+		while(line != null){
+		    dictionary.add(line);
+		    line = read.readLine();
+		}
+		return g; //not working yet
+	}
 
 }
