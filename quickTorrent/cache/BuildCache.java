@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import sites.pirate.PirateGrep;
 import sites.kat.KATGrep;
+import sites.pirate.PirateGrep;
 import connect.GetGzippedHTTP;
 import connect.GetHTTP;
 
@@ -16,18 +16,6 @@ public class BuildCache {
 	 KATGrep katSearch = new KATGrep();
 	 GetHTTP HTTPConnect = new GetHTTP();
 	 GetGzippedHTTP gzippedHTTPConnect = new GetGzippedHTTP();
-	
-	private ArrayList<ArrayList<String>> fullCache(ArrayList<String> filter,  ArrayList<String> size, ArrayList<String> seeds, ArrayList<String> leeches, ArrayList<String> links, ArrayList<String> magnetLinks){
-		ArrayList<ArrayList<String>> fullCache = new ArrayList<ArrayList<String>>() ;
-		fullCache.add(filter);
-		fullCache.add(size);
-		fullCache.add(seeds);
-		fullCache.add(leeches);
-		fullCache.add(links);
-		fullCache.add(magnetLinks);
-		
-		return fullCache ;
-	}
 	
 	private String filter(String wordList, String detailsPage ) throws IOException{
 		BufferedReader in = new BufferedReader(new FileReader(wordList));
@@ -47,7 +35,8 @@ public class BuildCache {
 		return "false";	
 	}
 	 
-	public ArrayList<ArrayList<String>> buildCache(String[] detailsURIs, String cacheType) throws IOException{
+	public AccessCache buildCache(String[] detailsURIs, String cacheType) throws IOException{
+	    AccessCache cache = new AccessCache();
 		ArrayList<String> links = new ArrayList<String>();
 		ArrayList<String> filter =  new ArrayList<String>();
 		ArrayList<String> magnetLinks =  new ArrayList<String>();
@@ -85,8 +74,17 @@ public class BuildCache {
 			}
 			
 		}
-		else
-			return null;	
-		return fullCache(filter, size, seeds, leeches, links, magnetLinks);
+		else {
+			return null;
+		}
+		
+		cache.setFilter(filter);
+		cache.setLinks(links);
+		cache.setMagnetLinks(magnetLinks);
+		cache.setSize(size);
+		cache.setSeeds(seeds);
+		cache.setLeeches(leeches);
+		
+		return cache;
 	}
 }
