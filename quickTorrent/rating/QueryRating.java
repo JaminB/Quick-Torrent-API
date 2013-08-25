@@ -11,22 +11,29 @@ import cache.*;
 public class QueryRating {
 	BuildCache buildCache = new BuildCache();
 	AccessCache accessCache = new AccessCache();
+	private int totalWords;
+	private int unImportantWords;
+	private int correctlySpelled;
+	private List<String> queryList = new LinkedList<String>();
+	private List<String> dictionaryList = new LinkedList<String>();
 	
-	int h = 0; //heuristic used to find the best link
-	int g = 100; //goal state
+	private double h = 0; //heuristic used to find the best link
 	
-	public int getQuerySize(String searchTerm){
-		int index = searchTerm.indexOf(" ");
-		int count = 0;
-		while (index != -1) {
-		    count++;
-		    searchTerm = searchTerm.substring(index + 1);
-		    index = searchTerm.indexOf(" ");
+	private void setQueryList(String searchTerm) {
+		int startPosition = 0;
+		int endPosition = 0;
+		for (int i = 0; i < searchTerm.length(); i++) {
+		   if (searchTerm.charAt(i) == ' '){
+			   endPosition = i;
+			   queryList.add(searchTerm.substring(startPosition, endPosition).replace(" ", "").toLowerCase());
+			   startPosition = endPosition;
+			   
+		   }
 		}
-		return count + 1;
+		queryList.add(searchTerm.substring(startPosition).replace(" ", "").toLowerCase());
 	}
 	
-	private boolean insignificantWord(String someWord){
+	private boolean isInsignificantWord(String someWord){
 		String[] ignoreList = {
 				"a","an","the",
 				"and", "but", "for", "nor", "or", "yet", 
@@ -43,37 +50,91 @@ public class QueryRating {
 		return false;
 		
 	}
-	public int getQueryImportantWords(String searchTerm){
-		//List<String> searchTerms = new LinkedList<String>(); // create a new list
-		int significantWordCount = 0;
-		int startIndex = 0;
-		int endIndex = 0;
-		for (int i = 0; i < searchTerm.length(); i++){
-			endIndex++;
-			if(searchTerm.charAt(i) == ' '){
-				String untestedWord = (searchTerm.substring(startIndex, endIndex).replaceAll("\\s", "").toLowerCase());
-				if(!insignificantWord(untestedWord))
-					significantWordCount++;
-				
-				startIndex = endIndex;
-			}
-		}
-		String untestedWord = (searchTerm.substring(startIndex, searchTerm.length()).replaceAll("\\s", "").toLowerCase());
-		if(!insignificantWord(untestedWord))
-			significantWordCount++;
+	
+	private boolean isInDictionary(String someWord){
+		if (dictionaryList.indexOf(someWord) != -1)
+			return true;
+		return false;
 		
-		return significantWordCount;
 	}
 	
-	public int getCorrectlySpelled(String searchTerm) throws IOException{
-		BufferedReader read = new BufferedReader(new FileReader("DictionaryList.txt"));
-		List<String> dictionary = new LinkedList<String>();
-		String line = read.readLine(); 
-		while(line != null){
-		    dictionary.add(line);
-		    line = read.readLine();
-		}
-		return g; //not working yet
+	private void setDictionaryList(String dictionaryFile) throws IOException{
+		@SuppressWarnings("resource")
+		BufferedReader in = new BufferedReader(new FileReader(dictionaryFile));
+		String line = in.readLine();
+		dictionaryList.clear();
+		while(line != null){ // loop till you have no more lines
+		    dictionaryList.add(line);
+		    line = in.readLine(); // try to read another line
+		}	
 	}
+	
+	public void setQuerySize(String searchTerm){
+		setQueryList(searchTerm);
+		this.totalWords = queryList.size();
+		queryList.clear();
+	}
+	
+		
+	
+	public void setUnimportantWords(String searchTerm){
+		setQueryList(searchTerm);
+		int unImportantWords = 0;
+		for(int i = 0; i < queryList.size(); i++)
+			if(isInsignificantWord(queryList.get(i)))
+				unImportantWords++;
+		this.unImportantWords = unImportantWords;
+		queryList.clear();
+	}
+	
+	
+	public void setCorrectlySpelled(String searchTerm) throws IOException {
+		setQueryList(searchTerm);
+		int correctlySpelled = 0;
+		setDictionaryList("DictionaryList.txt");
+		for (int i = 0; i < queryList.size(); i++){
+			if (isInDictionary(queryList.get(i)))
+					correctlySpelled++;
+		}
+		this.correctlySpelled = correctlySpelled;
+		queryList.clear();
+		dictionaryList.clear();
+	}
+	
+	public void setH(String searchTerm) throws IOException{
+		setUnimportantWords(searchTerm);
+		setQuerySize(searchTerm);
+		setCorrectlySpelled(searchTerm);
+		double totalWord = (double) getQuerySize();
+		double unImportantWords = (double) getUnimportantWords();
+		double correctlySpelled = (double) getCorrectlySpelled();
+		if (totalWords <= 7 && totalWords >= 2){
+			this.h = (correctlySpelled - (.5 * unImportantWords) )/totalWords;
+		}
+		else if (totalWords > 7)
+			this.h = ((correctlySpelled - (.5 * unImportantWords))/(totalWords-7))/totalWords;
+		
+		
+		else{
+			this.h = 0;
+		}
+	}
+	
+	public int getQuerySize(){
+		return this.totalWords;
+	}
+	public int getUnimportantWords(){
+		return this.unImportantWords;
+	}
+	
+	public int getCorrectlySpelled(){
+		return this.correctlySpelled;
+	}
+	
+	public double getH(){
+		return 100*this.h;
+	}
+	
+	
 
 }

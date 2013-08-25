@@ -9,8 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class WordListDeDuper {
-	//Efficient algorithm for finding the unique words that exist in one list but not another.
-	//Used for building large wordlists
+	//Creates a unique word list
 	public Set<String> wordDeDuper(String wordList1, String wordList2 ) throws IOException{
 	    Set<String> sortedSet = new TreeSet<String>();
 		BufferedReader read1 = new BufferedReader(new FileReader(wordList1));
@@ -34,7 +33,7 @@ public class WordListDeDuper {
 
 	public static void main(String args[]) throws IOException{
 		WordListDeDuper deDuplicator  = new WordListDeDuper();
-		Collection<String> uniqueWords = deDuplicator.wordDeDuper("1.txt", "2.txt");
+		Collection<String> uniqueWords = deDuplicator.wordDeDuper("revised1.txt", "3.txt");
 		PrintWriter output = new PrintWriter("uniqueList.txt");
 		for (String word : uniqueWords) {
 		    output.println(word);

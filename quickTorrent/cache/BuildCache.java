@@ -17,7 +17,7 @@ public class BuildCache {
 	 GetHTTP HTTPConnect = new GetHTTP();
 	 GetGzippedHTTP gzippedHTTPConnect = new GetGzippedHTTP();
 	
-	private String filter(String wordList, String detailsPage ) throws IOException{
+	public String filter(String wordList, String detailsPage ) throws IOException{
 		BufferedReader in = new BufferedReader(new FileReader(wordList));
 		List<String> lines = new LinkedList<String>(); // create a new list
 		String line = in.readLine(); // read a line at a time
